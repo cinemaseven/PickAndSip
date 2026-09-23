@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 // VITE_BASE_PATH is set by the Pages workflow to "/<repository-name>/", because
 // a GitHub project page is served from a subfolder, not the root of the domain.
@@ -17,3 +17,4 @@ export default defineConfig({
     },
   },
 })
+
