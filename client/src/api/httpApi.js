@@ -7,8 +7,7 @@ const BASE = import.meta.env.VITE_API_BASE_URL || ''
 
 async function request(path, options) {
   const response = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...options,
+    ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
   })
 
   if (!response.ok) {
@@ -26,15 +25,22 @@ async function request(path, options) {
   return response.status === 204 ? null : response.json()
 }
 
-export const listSightings = () => request('/api/sightings')
+export const getDashboard = () => request('/api/dashboard')
 
-export const getSighting = (id) => request(`/api/sightings/${id}`)
+export const listCafe = () => request(`/api/cafes`)
 
-export const createSighting = (input) =>
-  request('/api/sightings', { method: 'POST', body: JSON.stringify(input) })
+export const getCafe = id => request(`/api/cafes/${id}`)
 
-export const updateSighting = (id, input) =>
-  request(`/api/sightings/${id}`, { method: 'PUT', body: JSON.stringify(input) })
+export const createCafe = input => request('/api/cafes', { method:'POST', body:JSON.stringify(input) })
 
-export const deleteSighting = (id) =>
-  request(`/api/sightings/${id}`, { method: 'DELETE' })
+export const addVisit = (id, input) => request(`/api/cafes/${id}/visits`, { method:'POST', body:JSON.stringify(input) })
+
+export const updateCafeNotes = (id, noteIndex, value) => request(`/api/cafes/${id}/notes`, { method:'PATCH', body:JSON.stringify({ noteIndex, value }) })
+
+export const deleteCafeNotes = (id, noteIndex) => request(`/api/cafes/${id}/notes`, { method:'DELETE', body:JSON.stringify({ noteIndex }) })
+
+export const getProfile = () => request('/api/profile')
+
+export const updateProfile = input => request('/api/profile', { method:'PATCH', body:JSON.stringify(input) })
+
+export const pickCafe = filters => request(`/api/cafes/pick?${new URLSearchParams({ minRating: filters.minRating ?? '', priceRanges: filters.priceRanges?.join(',') ?? '', tags: filters.tags?.join(',') ?? '' })}`)

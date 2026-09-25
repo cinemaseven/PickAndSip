@@ -1,8 +1,39 @@
-[
-  { "id": "seed-1", "place": "Library, third floor", "description": "Chairs rearranged overnight, every time. The night guard says he locks the room himself.", "spookiness": 3, "reported_at": "2026-08-01T14:20:00.000Z" },
-  { "id": "seed-2", "place": "Old gym", "description": "Lights flicker in a fixed pattern after 9pm, always three short and one long.", "spookiness": 4, "reported_at": "2026-08-03T11:05:00.000Z" },
-  { "id": "seed-3", "place": "Parking basement", "description": "Footsteps with no one there. Reported separately by three different people in one week, which is what makes this one hard to dismiss. Two of them were alone at the time and did not know about the others. This entry is deliberately long, because a seed row of four words hides every text-wrapping bug you have.", "spookiness": 5, "reported_at": "2026-08-05T22:40:00.000Z" },
-  { "id": "seed-4", "place": "Canteen", "description": "A cold spot near the back door, every morning before seven.", "spookiness": 1, "reported_at": "2026-08-06T07:15:00.000Z" },
-  { "id": "seed-5", "place": "AB Building stairwell", "description": "", "spookiness": 2, "reported_at": "2026-08-08T18:30:00.000Z" },
-  { "id": "seed-6", "place": "Chapel garden", "description": "Someone humming. Stops the moment you turn around.", "spookiness": 3, "reported_at": "2026-08-10T05:50:00.000Z" }
-]
+{
+  "profile": { "id": 1, "username": "Ella" },
+  "cafes": [
+    {
+      "id": 1, "name": "Café MMs", "location": "Santa Rita, Pampanga", "priceRange": "PP", "rating": 5.0,
+      "tags": ["Study", "Hangout"], "notes": ["Good place to study and catch up with friends."], "image": null,
+      "visits": [
+        {"id": 101, "date": "2026-09-17", "notes": "Quiet afternoon.", "orders": [{"id":1001,"item":"Iced Seasalt Latte","price":170,"rating":5},{"id":1002,"item":"Charlie Chan Pasta","price":190,"rating":5}]},
+        {"id": 102, "date": "2026-09-13", "notes": "", "orders": [{"id":1003,"item":"Iced Seasalt Latte","price":170,"rating":5}]},
+        {"id": 103, "date": "2026-09-07", "notes": "", "orders": [{"id":1004,"item":"Iced Seasalt Latte","price":170,"rating":5},{"id":1005,"item":"Chicken ala king","price":180,"rating":5}]}
+      ]
+    },
+    {
+      "id": 2, "name": "Café Athalia", "location": "Santa Rita, Pampanga", "priceRange": "PP", "rating": 3.1,
+      "tags": ["Hangout", "Aesthetic"], "notes": ["Nice for casual visits."], "image": null,
+      "visits": [{"id":201,"date":"2026-09-11","notes":"","orders":[{"id":2001,"item":"Spanish Latte","price":180,"rating":3.1}]}]
+    },
+    {
+      "id": 3, "name": "Centro", "location": "Angeles City, Pampanga", "priceRange": "PP", "rating": 4.6,
+      "tags": ["Study", "Quiet"], "notes": ["Comfortable seating and quiet corners."], "image": null,
+      "visits": [{"id":301,"date":"2026-08-26","notes":"","orders":[{"id":3001,"item":"Latte","price":180,"rating":4.6}]}]
+    },
+    {
+      "id": 4, "name": "Myoc", "location": "Angeles City, Pampanga", "priceRange": "PPP", "rating": 2.3,
+      "tags": ["Hangout"], "notes": ["Good for a quick stop."], "image": null,
+      "visits": [{"id":401,"date":"2026-08-10","notes":"","orders":[{"id":4001,"item":"Iced Coffee","price":210,"rating":2.3}]}]
+    },
+    {
+      "id": 5, "name": "Singku", "location": "Angeles City, Pampanga", "priceRange": "PPP", "rating": 4.7,
+      "tags": ["Hangout", "Aesthetic"], "notes": ["Good ambiance for longer conversations."], "image": null,
+      "visits": [{"id":501,"date":"2026-08-04","notes":"","orders":[{"id":5001,"item":"Spanish Latte","price":210,"rating":4.7}]}]
+    },
+    {
+      "id": 6, "name": "Café Dia", "location": "Clark Freeport, Angeles, Pampanga", "priceRange": "PPP", "rating": 4.8,
+      "tags": ["Hangout", "Aesthetic"], "notes": ["Aesthetic space with good drinks."], "image": null,
+      "visits": [{"id":601,"date":"2026-07-30","notes":"","orders":[{"id":6001,"item":"Caramel Latte","price":190,"rating":4.8}]}]
+    }
+  ]
+}
