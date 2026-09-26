@@ -50,12 +50,13 @@ export async function getDashboard() {
     id: v.cafe.id,
     name: v.cafe.name,
     location: v.cafe.location,
-    date: new Date(v.date + 'T00:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric' }),
+    date: new Date(v.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     rating: v.cafe.rating,
     priceRange: v.cafe.priceRange,
     tags: v.cafe.tags,
     visitsCount: v.cafe.visits.length,
   }))
+  
   const visitCounts = data.cafes.map(c => ({ cafe:c, count:c.visits.length })).sort((a,b)=>b.count-a.count)
   
   const drinks = {}
@@ -205,9 +206,47 @@ export async function pickCafe(filters) {
 }
 
 export function getLevel(count) {
-  if (count >= 30) return { number:5, name:'Café Hopper', threshold:30, previous:20, next:null }
-  if (count >= 20) return { number:4, name:'Café Connoisseur', threshold:20, previous:10, next:30 }
-  if (count >= 10) return { number:3, name:'Café Enthusiast', threshold:10, previous:5, next:20 }
-  if (count >= 5) return { number:2, name:'Café Explorer', threshold:5, previous:1, next:10 }
-  return { number:1, name:'Café Starter', threshold:1, previous:0, next:5 }
+  if (count >= 30) {
+    return { 
+      number: 5, 
+      name: 'Café Hopper', 
+      threshold: 30, 
+      previous: 20, 
+      next: null 
+    }
+  }
+  if (count >= 20) {
+    return { 
+      number: 4,
+      name: 'Café Connoisseur',
+      threshold: 20,
+      previous: 10,
+      next: 30
+    }
+  }
+  if (count >= 10) {
+    return { 
+      number: 3,
+      name: 'Café Enthusiast',
+      threshold: 10,
+      previous: 5,
+      next: 20
+    }
+  }
+  if (count >= 5) {
+    return {
+      number: 2,
+      name: 'Café Explorer',
+      threshold: 5,
+      previous: 1,
+      next: 10
+    }
+  }
+  return { 
+    number: 1,
+    name: 'Café Starter',
+    threshold: 1,
+    previous: 0,
+    next:5
+  }
 }
