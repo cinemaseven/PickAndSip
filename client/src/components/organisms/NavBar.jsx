@@ -1,7 +1,7 @@
-import { NavLink, Link } from 'react-router';
-import { Menu, X } from 'lucide-react';
-import logoDark from '../../assets/logo-dark.svg';
 import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { NavLink, Link } from 'react-router';
+import logoDark from '../../assets/logo-dark.svg';
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
@@ -23,21 +23,46 @@ export default function NavBar() {
 
         <nav className="desktop-nav" aria-label="Main navigation">
           {links.map(([to, label]) => (
-            <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active' : ''}`
+              }
+            >
               {label}
             </NavLink>
           ))}
         </nav>
 
-        <button className="mobile-menu-button" type="button" aria-label="Open menu" onClick={() => setOpen(v => !v)}>
-          {open ? <X /> : <Menu />}
+        <button
+          className="mobile-menu-button"
+          type="button"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          onClick={() => setOpen(value => !value)}
+        >
+          {open ? (
+            <X size={26} strokeWidth={2.2} />
+          ) : (
+            <Menu size={28} strokeWidth={2.2} />
+          )}
         </button>
       </div>
 
       {open && (
         <nav className="mobile-nav" aria-label="Mobile navigation">
           {links.map(([to, label]) => (
-            <NavLink key={to} to={to} end={to === '/'} onClick={() => setOpen(false)} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? 'active' : ''}`
+              }
+            >
               {label}
             </NavLink>
           ))}
