@@ -27,6 +27,12 @@ export default function MyCafesPage() {
       setChooseOpen(true);
   }, [location.search]);
 
+  const availableTags = useMemo(() => (
+    Array.from(
+      new Set(cafes.flatMap(cafe => cafe.tags || []))
+    )
+  ), [cafes]);
+
   const visible = useMemo(() => cafes.filter(c => {
     const q = search.trim().toLowerCase();
 
@@ -61,7 +67,7 @@ export default function MyCafesPage() {
 
       <SearchBar value={search} onChange={setSearch} placeholder="Search by café name or location"/>
 
-      <FilterBar filters={filters} setFilters={setFilters}/>
+      <FilterBar filters={filters} setFilters={setFilters} tags={availableTags}/>
 
       {error ? (
         <p className="form-error">{error}</p>

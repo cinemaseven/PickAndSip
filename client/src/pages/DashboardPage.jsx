@@ -46,7 +46,7 @@ export default function DashboardPage() {
                 </span>
 
                 <span>
-                  <Star size={17} fill="currentColor"/> {Number(data.mostVisited?.rating || 0).toFixed(1)} overall
+                  <Star className="overall-rating-star" size={17} fill="currentColor"/> {Number(data.mostVisited?.rating || 0).toFixed(1)} overall
                 </span>
               </div>
             </div>

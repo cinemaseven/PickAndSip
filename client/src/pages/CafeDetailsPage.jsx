@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ExternalLink, MapPin, PlusCircle, Pencil, Trash2, Star } from 'lucide-react';
+import { ArrowLeft, Coffee, ExternalLink, MapPin, PlusCircle, Pencil, Trash2, Star } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
 import { getCafe, updateCafeNotes, deleteCafeNotes } from '../api';
 import Buttons from '../components/atoms/Buttons';
@@ -57,7 +57,10 @@ export default function CafeDetailsPage() {
     return <div className="page-container page-state">Loading café...</div>;
 
   const totalVisits = cafe.visits.length;
-  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + ' ' + cafe.location)}`;
+  const maps =
+    cafe.latitude != null && cafe.longitude != null
+      ? `https://www.google.com/maps/search/?api=1&query=${cafe.latitude},${cafe.longitude}`
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + ' ' + cafe.location)}`;
 
   return (
     <div className="page-container details-page">
@@ -67,7 +70,7 @@ export default function CafeDetailsPage() {
 
       <section className="cafe-hero">
         <div className="details-image">
-          <span>☕</span>
+          <Coffee size={56} strokeWidth={1.5} />
         </div>
 
         <div className="details-info">
@@ -131,7 +134,7 @@ export default function CafeDetailsPage() {
                     <span>{o.item}</span>
                     <span>₱{Number(o.price).toFixed(0)}</span>
                     <span className="rating">
-                      <StarRating size={15} fill="currentColor" />{Number(o.rating).toFixed(1)}
+                      <Star size={15} fill="currentColor" />{Number(o.rating).toFixed(1)}
                     </span>
                   </div>
                 ))}

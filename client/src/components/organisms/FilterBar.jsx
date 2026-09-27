@@ -9,9 +9,8 @@ const ratings = [
   { label: '4.5+', value: 4.5 }
 ];
 
-export default function FilterBar({ filters, setFilters }) {
+export default function FilterBar({ filters, setFilters, tags = [] }) {
   const [open, setOpen] = useState(null);
-  const tags = ['Study', 'Hangout', 'Aesthetic', 'Quiet'];
   const setRating = v => {
     setFilters(f => ({...f, minRating: v}));
     setOpen(null);
@@ -51,12 +50,16 @@ export default function FilterBar({ filters, setFilters }) {
 
         {open === 'price' && (
           <div className="filter-menu">
-            {['P', 'PP', 'PPP'].map(v => (
-              <button key={v} onClick={() => {
-                      toggle('priceRanges', v);
+            {[
+              { value: 'P', label: '₱100–₱200' },
+              { value: 'PP', label: '₱200–₱300' },
+              { value: 'PPP', label: '₱300+' }
+            ].map(({ value, label }) => (
+              <button key={value} onClick={() => {
+                      toggle('priceRanges', value);
                       setOpen(null);
                   }}>
-                  {v.replaceAll('P', '₱')}
+                  {label}
               </button>
             ))}
           </div>

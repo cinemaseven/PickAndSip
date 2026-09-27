@@ -139,7 +139,7 @@ export default function ChooseForMeModal({ onClose }) {
             <CafeCard cafe={result} compact />
 
             <div className="result-actions">
-              <Buttons onClick={() => {setResult(null);}}>
+              <Buttons onClick={() => navigate(`/cafes/${result.id}`)}>
                 View Café
               </Buttons>
 
