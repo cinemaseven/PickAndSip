@@ -1,27 +1,113 @@
--- Sample data for development.
---
--- This starts with TRUNCATE. That is correct on your laptop and catastrophic
--- against the database your live demo depends on. Check which DATABASE_URL is
--- loaded before you run it.
+-- Pick & Sip development seed data.
+TRUNCATE TABLE profiles, cafes, visits, orders RESTART IDENTITY CASCADE;
 
-TRUNCATE TABLE sightings RESTART IDENTITY CASCADE;
+INSERT INTO profiles (id, username)
+VALUES (1, 'Ella');
 
-INSERT INTO sightings (place, description, spookiness, reported_at) VALUES
-  ('Library, third floor',
-   'Chairs rearranged overnight, every time. The night guard says he locks the room himself.',
-   3, now() - interval '12 days'),
-  ('Old gym',
-   'Lights flicker in a fixed pattern after 9pm, always three short and one long.',
-   4, now() - interval '10 days'),
-  ('Parking basement',
-   'Footsteps with no one there. Reported separately by three different people in one week, which is what makes this one hard to dismiss. Two of them were alone at the time and did not know about the others. This row is deliberately long, because a seed of four words hides every text-wrapping bug you have.',
-   5, now() - interval '8 days'),
-  ('Canteen',
-   'A cold spot near the back door, every morning before seven.',
-   1, now() - interval '7 days'),
-  ('AB Building stairwell',
-   '',
-   2, now() - interval '5 days'),
-  ('Chapel garden',
-   'Someone humming. Stops the moment you turn around.',
-   3, now() - interval '2 days');
+INSERT INTO cafes (
+  id,
+  name,
+  location,
+  latitude,
+  longitude,
+  price_range,
+  rating,
+  tags,
+  notes
+)
+VALUES
+  (
+    1,
+    'Café MMs',
+    'Santa Rita, Pampanga',
+    NULL,
+    NULL,
+    'P',
+    5.0,
+    ARRAY['Study', 'Hangout'],
+    ARRAY['Good place to study and catch up with friends.']
+  ),
+  (
+    2,
+    'Café Athalia',
+    'Santa Rita, Pampanga',
+    NULL,
+    NULL,
+    'P',
+    3.1,
+    ARRAY['Hangout', 'Aesthetic'],
+    ARRAY['Nice for casual visits.']
+  ),
+  (
+    3,
+    'Centro',
+    'Angeles City, Pampanga',
+    NULL,
+    NULL,
+    'P',
+    4.6,
+    ARRAY['Study', 'Quiet'],
+    ARRAY['Comfortable seating and quiet corners.']
+  ),
+  (
+    4,
+    'Myoc',
+    'Angeles City, Pampanga',
+    NULL,
+    NULL,
+    'PP',
+    2.3,
+    ARRAY['Hangout'],
+    ARRAY['Good for a quick stop.']
+  ),
+  (
+    5,
+    'Singku',
+    'Angeles City, Pampanga',
+    NULL,
+    NULL,
+    'PP',
+    4.7,
+    ARRAY['Hangout', 'Aesthetic'],
+    ARRAY['Good ambiance for longer conversations.']
+  ),
+  (
+    6,
+    'Café Dia',
+    'Clark Freeport, Angeles, Pampanga',
+    NULL,
+    NULL,
+    'P',
+    4.8,
+    ARRAY['Hangout', 'Aesthetic'],
+    ARRAY['Aesthetic space with good drinks.']
+  );
+
+INSERT INTO visits (id, cafe_id, visit_date, notes)
+VALUES
+  (101, 1, '2026-09-17', 'Quiet afternoon.'),
+  (102, 1, '2026-09-13', ''),
+  (103, 1, '2026-09-07', ''),
+  (201, 2, '2026-09-11', ''),
+  (301, 3, '2026-08-26', ''),
+  (401, 4, '2026-08-10', ''),
+  (501, 5, '2026-08-04', ''),
+  (601, 6, '2026-07-30', '');
+
+INSERT INTO orders (id, visit_id, item, price, rating)
+VALUES
+  (1001, 101, 'Iced Seasalt Latte', 170, 5.0),
+  (1002, 101, 'Charlie Chan Pasta', 190, 5.0),
+  (1003, 102, 'Iced Seasalt Latte', 170, 5.0),
+  (1004, 103, 'Iced Seasalt Latte', 170, 5.0),
+  (1005, 103, 'Chicken ala king', 180, 5.0),
+  (2001, 201, 'Spanish Latte', 180, 3.1),
+  (3001, 301, 'Latte', 180, 4.6),
+  (4001, 401, 'Iced Coffee', 210, 2.3),
+  (5001, 501, 'Spanish Latte', 210, 4.7),
+  (6001, 601, 'Caramel Latte', 190, 4.8);
+
+SELECT setval(pg_get_serial_sequence('profiles', 'id'), COALESCE(MAX(id), 1)) FROM profiles;
+SELECT setval(pg_get_serial_sequence('cafes', 'id'), COALESCE(MAX(id), 1)) FROM cafes;
+SELECT setval(pg_get_serial_sequence('visits', 'id'), COALESCE(MAX(id), 1)) FROM visits;
+SELECT setval(pg_get_serial_sequence('orders', 'id'), COALESCE(MAX(id), 1)) FROM orders;
