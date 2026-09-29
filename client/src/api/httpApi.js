@@ -5,7 +5,7 @@
 
 const BASE = import.meta.env.VITE_API_BASE_URL || ''
 
-async function request(path, options) {
+async function request(path, options = {}) {
   const response = await fetch(`${BASE}${path}`, {
     ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
   })
@@ -27,7 +27,7 @@ async function request(path, options) {
 
 export const getDashboard = () => request('/api/dashboard')
 
-export const listCafe = () => request(`/api/cafes`)
+export const listCafes = () => request(`/api/cafes`)
 
 export const getCafe = id => request(`/api/cafes/${id}`)
 

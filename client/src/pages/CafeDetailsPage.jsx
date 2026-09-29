@@ -94,7 +94,8 @@ export default function CafeDetailsPage() {
         </div>
 
         <Buttons variant="accent" onClick={() => navigate(`/add?cafe=${cafe.id}`)}>
-          <PlusCircle size={18} />Add visit
+          <PlusCircle size={18} />
+          Add visit
         </Buttons>
       </section>
 

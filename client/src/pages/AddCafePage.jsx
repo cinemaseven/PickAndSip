@@ -233,69 +233,149 @@ function MapLocationMarker({ selectedPosition, setForm }) {
 
 function CafePicker({ query, setQuery, form, setForm }) {
   const defaultCenter = [15.145, 120.5887];
+  const [suggestions, setSuggestions] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   const selectedPosition =
     form.latitude != null && form.longitude != null
       ? [form.latitude, form.longitude]
       : null;
 
-  async function searchLocation() {
+  useEffect(() => {
     const searchText = query.trim();
 
-    if (!searchText) {
+    if (searchText.length < 2) {
+      setSuggestions([]);
+      setSearching(false);
       return;
     }
 
-    try {
-      const locationText = form.location.trim();
+    const controller = new AbortController();
 
-      const searchQuery = locationText
-        ? `${searchText}, ${locationText}`
-        : `${searchText}, Pampanga, Philippines`;
+    const timer = setTimeout(async () => {
+      try {
+        setSearching(true);
 
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(searchQuery)}`
-      );
+        const response = await fetch(
+          `https://photon.komoot.io/api/?q=${encodeURIComponent(searchText)}&limit=5&lang=en`,
+          {
+            signal: controller.signal
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error('Unable to search for the café location.');
+        if (!response.ok) {
+          throw new Error('Unable to search for cafés.');
+        }
+
+        const data = await response.json();
+
+        setSuggestions(data.features || []);
       }
-
-      const results = await response.json();
-
-      if (!results.length) {
-        return;
+      catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Café search failed:', error);
+          setSuggestions([]);
+        }
       }
+      finally {
+        if (!controller.signal.aborted) {
+          setSearching(false);
+        }
+      }
+    }, 400);
 
-      const latitude = Number(results[0].lat);
-      const longitude = Number(results[0].lon);
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [query]);
 
-      setForm(current => ({
-        ...current,
-        latitude,
-        longitude
-      }));
-    }
-    catch (error) {
-      console.error('Location search failed:', error);
-    }
+  function getPlaceName(properties) {
+    return (
+      properties.name ||
+      properties.street ||
+      properties.city ||
+      properties.town ||
+      properties.village ||
+      ''
+    );
+  }
+
+  function getPlaceLocation(properties) {
+    const parts = [
+      properties.street && properties.housenumber
+        ? `${properties.housenumber} ${properties.street}`
+        : properties.street,
+      properties.district,
+      properties.city || properties.town || properties.village,
+      properties.state,
+      properties.country
+    ].filter(Boolean);
+
+    return parts.join(', ');
+  }
+
+  function selectSuggestion(feature) {
+    const [longitude, latitude] = feature.geometry.coordinates;
+    const name = getPlaceName(feature.properties);
+    const location = getPlaceLocation(feature.properties);
+
+    setForm(current => ({
+      ...current,
+      name,
+      location,
+      latitude,
+      longitude
+    }));
+
+    setQuery(name);
+    setSuggestions([]);
   }
 
   return (
     <section className="find-cafe-panel">
       <h2>Find the Café</h2>
 
-      <SearchBar
-        value={query}
-        onChange={setQuery}
-        onKeyDown={event => {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            searchLocation();
-          }
-        }}
-        placeholder="Café"
-      />
+      <div className="cafe-search-wrap">
+        <SearchBar
+          value={query}
+          onChange={setQuery}
+          placeholder="Café or location"
+        />
+
+        {query.trim().length >= 2 && (
+          <div className="cafe-search-suggestions">
+            {searching ? (
+              <div className="cafe-search-status">Searching...</div>
+            ) : suggestions.length > 0 ? (
+              suggestions.map((feature, index) => {
+                const name = getPlaceName(feature.properties);
+                const location = getPlaceLocation(feature.properties);
+
+                return (
+                  <button
+                    type="button"
+                    className="cafe-search-suggestion"
+                    key={`${feature.properties.osm_id || index}-${feature.geometry.coordinates.join('-')}`}
+                    onClick={() => selectSuggestion(feature)}
+                  >
+                    <Coffee size={22} />
+
+                    <span>
+                      <strong>{name}</strong>
+                      <small>{location}</small>
+                    </span>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="cafe-search-status">
+                No matching places found.
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       <div className="map-placeholder">
         <MapContainer
