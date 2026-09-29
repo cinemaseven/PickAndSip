@@ -45,7 +45,7 @@ export async function getCafe(pool, id) {
     const visitsResult = await pool.query(`
         SELECT
         v.id,
-        v.visit_date AS date,
+        TO_CHAR(v.visit_date, 'YYYY-MM-DD') AS date,
         v.notes,
         COALESCE(
             json_agg(
@@ -169,7 +169,7 @@ export async function addVisit(pool, cafeId, input) {
     const visitResult = await client.query(`
         INSERT INTO visits (cafe_id, visit_date, notes)
         VALUES ($1, $2, $3)
-        RETURNING id, visit_date AS date, notes
+        RETURNING id, TO_CHAR(visit_date, 'YYYY-MM-DD') AS date, notes
     `, [
         cafeId,
         input.date,

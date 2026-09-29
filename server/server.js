@@ -161,7 +161,7 @@ app.get('/api/dashboard', async (request, response, next) => {
     const recentResult = await pool.query(`
       SELECT
         v.id,
-        v.visit_date AS date,
+        TO_CHAR(v.visit_date, 'YYYY-MM-DD') AS date,
         c.id AS "cafeId",
         c.name,
         c.location,
