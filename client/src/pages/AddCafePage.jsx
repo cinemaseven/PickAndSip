@@ -233,8 +233,12 @@ function MapLocationMarker({ selectedPosition, setForm }) {
 
 function CafePicker({ query, setQuery, form, setForm }) {
   const defaultCenter = [15.145, 120.5887];
-  const [suggestions, setSuggestions] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [searchCenter, setSearchCenter] = useState({
+    latitude: defaultCenter[0],
+    longitude: defaultCenter[1]
+  });
 
   const selectedPosition =
     form.latitude != null && form.longitude != null
@@ -242,22 +246,67 @@ function CafePicker({ query, setQuery, form, setForm }) {
       : null;
 
   useEffect(() => {
+    if (!navigator.geolocation) {
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const isWithinPhilippines =
+          latitude >= 4.5 &&
+          latitude <= 21.5 &&
+          longitude >= 116.5 &&
+          longitude <= 127.5;
+
+        if (isWithinPhilippines) {
+          setSearchCenter({
+            latitude,
+            longitude
+          });
+        }
+      },
+      () => {
+        // Use Angeles City, Pampanga as the fallback.
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 300000
+      }
+    );
+  }, []);
+
+  useEffect(() => {
     const searchText = query.trim();
 
     if (searchText.length < 2) {
-      setSuggestions([]);
+      setSearchResults([]);
       setSearching(false);
       return;
     }
 
     const controller = new AbortController();
-
     const timer = setTimeout(async () => {
+      setSearching(true);
+
       try {
-        setSearching(true);
+        const params = new URLSearchParams({
+          q: searchText,
+          limit: '5',
+          lang: 'en',
+          countrycode: 'PH',
+          bbox: '116.5,4.5,127.5,21.5',
+          lat: String(searchCenter.latitude),
+          lon: String(searchCenter.longitude),
+          zoom: '12',
+          location_bias_scale: '0.2'
+        });
 
         const response = await fetch(
-          `https://photon.komoot.io/api/?q=${encodeURIComponent(searchText)}&limit=5&lang=en`,
+          `https://photon.komoot.io/api/?${params.toString()}`,
           {
             signal: controller.signal
           }
@@ -268,13 +317,12 @@ function CafePicker({ query, setQuery, form, setForm }) {
         }
 
         const data = await response.json();
-
-        setSuggestions(data.features || []);
+        setSearchResults(data.features || []);
       }
       catch (error) {
         if (error.name !== 'AbortError') {
           console.error('Café search failed:', error);
-          setSuggestions([]);
+          setSearchResults([]);
         }
       }
       finally {
@@ -288,37 +336,44 @@ function CafePicker({ query, setQuery, form, setForm }) {
       clearTimeout(timer);
       controller.abort();
     };
-  }, [query]);
+  }, [query, searchCenter]);
 
-  function getPlaceName(properties) {
-    return (
-      properties.name ||
-      properties.street ||
-      properties.city ||
-      properties.town ||
-      properties.village ||
-      ''
-    );
+  function getLocationText(properties) {
+    const street = [properties.housenumber, properties.street]
+      .filter(Boolean)
+      .join(' ');
+    const area = properties.suburb || properties.neighbourhood || properties.district;
+    const city = properties.city || properties.locality || properties.county;
+    const state = properties.state;
+
+    return [
+      street,
+      area,
+      city,
+      state
+    ]
+      .filter(Boolean)
+      .filter((value, index, values) => values.indexOf(value) === index)
+      .join(', ') || properties.country || 'Philippines';
   }
 
-  function getPlaceLocation(properties) {
-    const parts = [
-      properties.street && properties.housenumber
-        ? `${properties.housenumber} ${properties.street}`
-        : properties.street,
-      properties.district,
-      properties.city || properties.town || properties.village,
-      properties.state,
-      properties.country
-    ].filter(Boolean);
+  function selectSearchResult(result) {
+    const properties = result.properties || {};
+    const coordinates = result.geometry?.coordinates;
 
-    return parts.join(', ');
-  }
+    if (!Array.isArray(coordinates) || coordinates.length < 2) {
+      return;
+    }
 
-  function selectSuggestion(feature) {
-    const [longitude, latitude] = feature.geometry.coordinates;
-    const name = getPlaceName(feature.properties);
-    const location = getPlaceLocation(feature.properties);
+    const longitude = Number(coordinates[0]);
+    const latitude = Number(coordinates[1]);
+
+    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+      return;
+    }
+
+    const name = properties.name || query.trim();
+    const location = getLocationText(properties);
 
     setForm(current => ({
       ...current,
@@ -327,50 +382,58 @@ function CafePicker({ query, setQuery, form, setForm }) {
       latitude,
       longitude
     }));
-
-    setQuery(name);
-    setSuggestions([]);
+    setQuery('');
+    setSearchResults([]);
   }
 
   return (
     <section className="find-cafe-panel">
       <h2>Find the Café</h2>
 
-      <div className="cafe-search-wrap">
+      <div className="cafe-search-wrapper">
         <SearchBar
           value={query}
           onChange={setQuery}
-          placeholder="Café or location"
+          placeholder="Café"
         />
 
-        {query.trim().length >= 2 && (
-          <div className="cafe-search-suggestions">
-            {searching ? (
-              <div className="cafe-search-status">Searching...</div>
-            ) : suggestions.length > 0 ? (
-              suggestions.map((feature, index) => {
-                const name = getPlaceName(feature.properties);
-                const location = getPlaceLocation(feature.properties);
-
-                return (
-                  <button
-                    type="button"
-                    className="cafe-search-suggestion"
-                    key={`${feature.properties.osm_id || index}-${feature.geometry.coordinates.join('-')}`}
-                    onClick={() => selectSuggestion(feature)}
-                  >
-                    <Coffee size={22} />
-
-                    <span>
-                      <strong>{name}</strong>
-                      <small>{location}</small>
-                    </span>
-                  </button>
-                );
-              })
-            ) : (
+        {query.trim().length >= 2 && (searching || searchResults.length > 0) && (
+          <div className="cafe-search-results">
+            {searching && (
               <div className="cafe-search-status">
-                No matching places found.
+                Searching cafés in the Philippines...
+              </div>
+            )}
+
+            {!searching && searchResults.map((result, index) => {
+              const properties = result.properties || {};
+              const location = getLocationText(properties);
+
+              return (
+                <button
+                  key={`${properties.osm_type || 'place'}-${properties.osm_id || index}`}
+                  type="button"
+                  className="cafe-search-result"
+                  onClick={() => selectSearchResult(result)}
+                >
+                  <Coffee size={22} strokeWidth={1.8} />
+
+                  <span>
+                    <strong>
+                      {properties.name || 'Unnamed place'}
+                    </strong>
+
+                    <small>
+                      {location}
+                    </small>
+                  </span>
+                </button>
+              );
+            })}
+
+            {!searching && searchResults.length === 0 && (
+              <div className="cafe-search-status">
+                No cafés found in the Philippines.
               </div>
             )}
           </div>
