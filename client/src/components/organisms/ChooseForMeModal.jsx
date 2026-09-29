@@ -98,7 +98,7 @@ export default function ChooseForMeModal({ onClose }) {
               <div className="picker-price">
                 {['P', 'PP', 'PPP'].map(v => (
                   <Chip key={v} selected={filters.priceRanges.includes(v)} onClick={() => togglePrice(v)}>
-                    {v.replaceAll('P', '₱')}
+                    {v === 'P' ? '₱100-₱200' : v === 'PP' ? '₱200-₱300' : '₱300+'}
                   </Chip>
                 ))}
               </div>

@@ -2,7 +2,14 @@ import { Coffee, MapPin, Star } from 'lucide-react';
 
 export default function CafeCard({ cafe, onClick, recent = false, compact = false }) {
     const visits = cafe.visitsCount ?? cafe.visits?.length ?? 0;
-    const price = cafe.averagePrice ?? (cafe.priceRange === 'P' ? '₱170.00' : cafe.priceRange === 'PP' ? '₱180.00' : '₱210.00');
+    const priceRange =
+        cafe.priceRange === 'P'
+            ? '₱100-₱200'
+            : cafe.priceRange === 'PP'
+                ? '₱200-₱300'
+                : cafe.priceRange === 'PPP'
+                    ? '₱300+'
+                    : cafe.priceRange;
 
     return (
         <article className={`cafe-card ${recent ? 'cafe-card-recent' : ''} ${compact ? 'cafe-card-compact' : ''}`}
@@ -27,7 +34,7 @@ export default function CafeCard({ cafe, onClick, recent = false, compact = fals
                             {Number(cafe.rating).toFixed(1)}
                         </span>
 
-                        <strong>{price}</strong>
+                        <strong>{priceRange}</strong>
                     </div>
                 )}
 

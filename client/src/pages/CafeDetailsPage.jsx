@@ -107,7 +107,15 @@ export default function CafeDetailsPage() {
         </StatCard>
 
         <StatCard label="Price range">
-          <strong className="stat-big price-big">{cafe.priceRange.replaceAll('P', '₱')}</strong>
+          <strong className="stat-big price-big">
+            {cafe.priceRange === 'P'
+              ? '₱100-₱200'
+              : cafe.priceRange === 'PP'
+                ? '₱200-₱300'
+                : cafe.priceRange === 'PPP'
+                  ? '₱300+'
+                  : cafe.priceRange}
+          </strong>
         </StatCard>
 
         <StatCard label="Total visits">
