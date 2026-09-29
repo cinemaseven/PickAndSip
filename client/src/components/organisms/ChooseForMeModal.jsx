@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Dice5, X } from 'lucide-react';
 import Buttons from '../atoms/Buttons';
 import Chip from '../atoms/Chip';
@@ -21,6 +22,7 @@ export default function ChooseForMeModal({ onClose }) {
     tags: []
   });
 
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
