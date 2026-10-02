@@ -14,7 +14,7 @@ const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173')
 app.use(cors({ origin: allowedOrigins }))
 app.use(express.json({ limit: '100kb' }))
 
-app.get('/healthz', (request, response) => {
+app.get('/health', (request, response) => {
   response.json({ ok: true })
 })
 
