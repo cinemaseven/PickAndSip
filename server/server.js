@@ -180,6 +180,7 @@ app.get('/api/dashboard', async (request, response, next) => {
         o.item AS name,
         COUNT(*)::int AS count
       FROM orders o
+      WHERE LOWER(o.item) ~ '(latte|coffee|tea|matcha|espresso|cappuccino|americano|mocha|frappe|frappuccino|macchiato|chai|taro|milk tea|smoothie|shake|lemonade|juice|soda|brew|affogato)'
       GROUP BY o.item
       ORDER BY count DESC, o.item ASC
       LIMIT 1
@@ -200,7 +201,7 @@ app.get('/api/dashboard', async (request, response, next) => {
     }))
 
     const mostOrdered = drinksResult.rows[0] || {
-      name: 'Iced Seasalt Latte',
+      name: 'No drinks yet',
       count: 0
     }
 
