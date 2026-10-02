@@ -1798,12 +1798,12 @@ h2 {
   }
 
   .brand {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .brand img {
-    width: 39px;
-    height: 47px;
+    width: 35px;
+    height: 43px;
   }
 
   .desktop-nav {
@@ -1811,8 +1811,8 @@ h2 {
   }
 
   .mobile-menu-button {
-    width: 44px;
-    height: 44px;
+    width: 38px;
+    height: 38px;
     display: grid;
     place-items: center;
     padding: 0;
@@ -1864,12 +1864,12 @@ h2 {
   }
 
   .page-container {
-    width: calc(100% - 40px);
-    padding: 34px 0 50px;
+    width: calc(100% - 56px);
+    padding: 28px 0 44px; 
   }
 
   h1 {
-    font-size: 42px;
+    font-size: 34px;
   }
 
   .footer-inner {
@@ -1892,7 +1892,51 @@ h2 {
 
   .summary-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 14px;
+  }
+
+  .summary-card {
+    border-radius: 22px;
+    padding: 20px 22px;
+  }
+
+  .card-label {
+    margin-bottom: 14px;
+    font-size: 15px;
+  }
+
+  .summary-cafe {
+    gap: 16px;
+  }
+
+  .summary-image {
+    width: 92px;
+    height: 88px;
+    border-radius: 20px;
+  }
+
+  .summary-cafe h2,
+  .drink-summary h2 {
+    font-size: 21px;
+  }
+
+  .summary-meta {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .drink-summary {
+    gap: 14px;
+  }
+
+  .drink-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .ordered-count {
+    font-size: 12px;
+    margin-top: 18px;
   }
 
   .quick-card {
@@ -1905,6 +1949,46 @@ h2 {
 
   .recent-grid,.cafe-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .cafe-card {
+    border-radius: 14px;
+  }
+
+  .cafe-image {
+    height: 108px;
+  }
+
+  .cafe-card-body {
+    padding: 11px 15px 13px;
+  }
+
+  .cafe-card h3 {
+    font-size: 18px;
+  }
+
+  .location,
+  .visits-count,
+  .recent-meta {
+    font-size: 11px;
+  }
+
+  .cafe-main-meta {
+    margin-top: 12px;
+  }
+
+  .cafe-main-meta strong {
+    font-size: 14px;
+  }
+
+  .cafe-tags-row {
+    margin-top: 8px;
+  }
+
+  .tag {
+    padding: 3px 11px;
+    font-size: 10px;
   }
 
   .page-title-row,.add-title-row {
@@ -1916,9 +2000,25 @@ h2 {
   }
 
   .filter-bar {
-    flex-wrap: wrap;
-    margin-bottom: 45px;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0 38px;
+  }
+
+  .filter-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 36px;
+    padding: 6px 13px;
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .chip {
+    min-height: 34px;
+    padding: 6px 13px;
+    font-size: 11px;
   }
 
   .filter-divider {
@@ -1926,12 +2026,23 @@ h2 {
   }
 
   .clear-filter {
-    margin-left: 0;
+    grid-column: 1 / -1;
+    justify-self: start;
+    font-size: 12px;
+    padding: 0;
   }
 
   .cafe-hero {
     grid-template-columns: 1fr;
-    padding: 17px;
+    gap: 16px;
+    padding: 13px;
+    border-radius: 20px;
+  }
+
+  .details-image {
+    height: 170px;
+    border-radius: 13px;
+    font-size: 52px;
   }
 
   .cafe-hero>.button {
@@ -1939,7 +2050,11 @@ h2 {
   }
 
   .details-info h1 {
-    font-size: 40px;
+    font-size: 32px;
+  }
+
+  .details-location {
+    font-size: 12px;
   }
 
   .details-location {
@@ -1949,40 +2064,85 @@ h2 {
 
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 18px 0 22px;
+  }
+
+  .stat-card {
+    min-height: 92px;
+    padding: 12px 18px;
+    border-radius: 20px;
+  }
+
+  .stat-card p {
+    font-size: 14px;
+  }
+
+  .stat-big {
+    font-size: 32px;
   }
 
   .history-notes {
     grid-template-columns: 1fr;
-    padding: 20px;
+    padding: 16px;
+    border-radius: 22px;
   }
 
   .visit-history {
-    padding: 0 0 22px;
+    padding: 0 0 16px;
     border-right: 0;
     border-bottom: 1px solid var(--color-line);
   }
 
   .notes-panel {
-    padding: 22px 0 0;
+    padding: 16px 0 0;
+  }
+
+  .section-mini-title h2 {
+    font-size: 23px;
+  }
+
+  .visit-row {
+    grid-template-columns: 68px 1fr;
+    gap: 10px;
+    padding: 13px 3px;
   }
 
   .two-fields {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 13px;
+    margin-bottom: 16px;
   }
 
   .find-cafe-panel {
     grid-template-columns: 1fr;
+    row-gap: 12px;
+    padding: 18px 18px 20px;
+    border-radius: 22px;
+  }
+
+  .find-cafe-panel h2,
+  .form-panel h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 
   .map-placeholder {
     grid-column: 1;
     grid-row: auto;
+    min-height: 260px;
+    border-radius: 13px;
+  }
+
+  .cafe-map {
+    min-height: 260px;
   }
 
   .map-location-status {
     grid-column: 1;
-    margin-top: -4px;
+    margin-top: -2px;
+    font-size: 11px;
+    line-height: 1.35;
   }
 
   .map-location-status span {
@@ -1998,16 +2158,108 @@ h2 {
     grid-column: auto;
   }
 
+  .form-panel {
+    padding: 18px 18px 20px;
+    border-radius: 22px;
+  }
+
+  .form-panel label,
+  .field-label {
+    font-size: 12px;
+  }
+
+  .form-panel input,
+  .form-panel textarea {
+    padding: 8px 10px;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  .form-panel textarea {
+    min-height: 65px;
+  }
+
+  .form-chips {
+    gap: 7px;
+  }
+
+  .form-chips .chip {
+    min-height: 32px;
+    padding: 5px 11px;
+  }
+
+  .custom-tag-row {
+    gap: 6px;
+  }
+
+  .custom-tag-row button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
   .mode-toggle {
     min-width: 0;
     width: 100%;
   }
 
+  .mode-toggle button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .price-levels button {
+    padding: 5px 3px;
+    font-size: 11px;
+  }
+
+  .stars button {
+    font-size: 18px;
+  }
+
+  .order-row {
+    padding: 7px;
+  }
+
+  .order-inputs {
+    gap: 8px;
+  }
+
+  .add-order {
+    padding: 8px;
+    margin-top: 9px;
+    font-size: 12px;
+  }
+
   .form-actions {
-    position: sticky;
-    bottom: 0;
-    background: var(--color-bg);
-    padding: 10px 0;
+    position: static;
+    bottom: auto;
+    background: transparent;
+    padding: 0;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .form-actions .button {
+    min-height: 38px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .add-title-row {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .page-title-row h1,
+  .add-title-row h1 {
+    font-size: 34px;
+  }
+
+  .page-title-row p,
+  .add-title-row p {
+    font-size: 14px;
   }
 
   .profile-page {
@@ -2015,8 +2267,8 @@ h2 {
   }
 
   .profile-page > h1 {
-    font-size: 32px;
-    margin-bottom: 14px;
+    font-size: 30px;
+    margin-bottom: 12px;
   }
 
   .profile-grid {
@@ -2027,9 +2279,9 @@ h2 {
 
   .profile-card {
     width: 100%;
-    min-height: 85px;
+    min-height: 76px;
     height: auto;
-    padding: 12px 15px;
+    padding: 10px 12px;
     display: grid;
     grid-template-columns: 56px minmax(0, 1fr) auto;
     grid-template-rows: auto auto;
@@ -2045,9 +2297,9 @@ h2 {
   }
 
   .avatar-large {
-    width: 56px;
-    height: 56px;
-    font-size: 27px;
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
   }
 
   .profile-label {
@@ -2063,7 +2315,7 @@ h2 {
     grid-column: 2;
     grid-row: 2;
     align-self: start;
-    font-size: 22px;
+    font-size: 19px;
     line-height: 1.1;
     margin: 2px 0 0;
   }
@@ -2072,11 +2324,20 @@ h2 {
     grid-column: 3;
     grid-row: 1 / 3;
     width: auto;
-    min-width: 70px;
+    min-width: 62px;
+    min-height: 30px;
+    padding: 4px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .profile-page > .button {
+    display: flex;
+    width: 120px;
     min-height: 34px;
+    margin: 24px auto 0;
     padding: 5px 13px;
     font-size: 12px;
-    white-space: nowrap;
   }
 
   .profile-input {
@@ -2099,7 +2360,7 @@ h2 {
   .level-card {
     width: 100%;
     min-height: 0;
-    padding: 17px 16px 18px;
+    padding: 14px 14px 16px;
     border-radius: 18px;
     overflow: visible;
   }
@@ -2110,8 +2371,8 @@ h2 {
 
   .level-title {
     width: fit-content;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 11px;
     gap: 7px;
   }
 
@@ -2127,9 +2388,9 @@ h2 {
   }
 
   .level-card h2 {
-    font-size: 26px;
+    font-size: 23px;
     line-height: 1.08;
-    margin: 4px 0 14px;
+    margin: 4px 0 12px;
   }
 
   .progress-track {
@@ -2177,10 +2438,10 @@ h2 {
   .level-dot {
     grid-column: 1;
     grid-row: 1 / 3;
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     border-width: 2px;
-    font-size: 15px;
+    font-size: 14px;
     z-index: 2;
   }
 
@@ -2188,7 +2449,7 @@ h2 {
     grid-column: 2;
     grid-row: 1;
     margin: 0;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.2;
   }
 
@@ -2200,17 +2461,27 @@ h2 {
   }
 
   .picker-modal {
-    padding: 34px 22px 26px;
-    border-radius: 28px;
+    width: calc(100% - 24px);
+    padding: 26px 18px 20px;
+    border-radius: 24px;
   }
 
   .picker-modal h2 {
-    font-size: 40px;
+    font-size: 30px;
+  }
+
+  .modal-subtitle {
+    font-size: 13px;
+    margin-bottom: 26px;
+  }
+
+  .picker-section {
+    margin-bottom: 20px;
   }
 
   .modal-close {
-    right: 20px;
-    top: 28px;
+    right: 15px;
+    top: 20px;
   }
 
   .segmented {
@@ -2219,7 +2490,25 @@ h2 {
   }
 
   .segmented button {
-    padding: 10px;
+    padding: 7px;
+    font-size: 12px;
+  }
+
+  .picker-section h3 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .picker-price,
+  .picker-tags {
+    gap: 7px;
+  }
+
+  .picker-price .chip,
+  .picker-tags .chip {
+    min-height: 32px;
+    padding: 5px 11px;
+    font-size: 11px;
   }
 
   .result-actions {
@@ -2230,6 +2519,17 @@ h2 {
   .result-card {
     width: 100%;
   }
+
+  .result-actions {
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .result-actions .button {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
 }
 
 @media(max-width:480px) {
@@ -2240,9 +2540,9 @@ h2 {
   .login-heading h1 {
     font-size: 26px;
   }
-  
+
   .brand span {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .summary-cafe {
@@ -2250,46 +2550,76 @@ h2 {
   }
 
   .summary-image {
-    width: 105px;
-    height: 100px;
+    width: 82px;
+    height: 78px;
   }
 
-  .summary-cafe h2,.drink-summary h2 {
-    font-size: 24px;
+  .summary-cafe h2,
+  .drink-summary h2 {
+    font-size: 19px;
   }
 
   .section-heading h2 {
-    font-size: 33px;
+    font-size: 28px;
   }
 
   .order-inputs {
     grid-template-columns: 1fr;
   }
 
-  .page-title-row h1,.add-title-row h1 {
-    font-size: 39px;
+  .page-title-row h1,
+  .add-title-row h1 {
+    font-size: 30px;
   }
 
   .cafe-card-compact .cafe-card-body h3 {
-    font-size: 26px;
+    font-size: 22px;
   }
 
   .picker-section h3 {
-    font-size: 17px;
+    font-size: 14px;
+  }
+
+  .page-container {
+    width: calc(100% - 56px);
+    padding-top: 24px;
+  }
+
+  .button {
+    min-height: 38px;
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+
+  .choose-large {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .details-info h1 {
+    font-size: 29px;
+  }
+
+  .details-image {
+    height: 150px;
+  }
+
+  .stat-big {
+    font-size: 29px;
+  }
+
+  .form-actions {
+    padding: 7px 12px;
+  }
+
+  .form-actions .button {
+    min-height: 36px;
+    padding: 7px 12px;
+    font-size: 11px;
   }
 }
 
 :focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
-}
-
-@media(max-width:480px) {
-  .login-card {
-    padding: 28px 22px;
-  }
-
-  .login-heading h1 {
-    font-size: 26px;
-  }
 }
