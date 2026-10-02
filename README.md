@@ -5,7 +5,9 @@
 Pick & Sip is a personal café-tracking web application designed to help me keep track of the cafés I visit, my orders and experiences, and where I might want to go next.
 
 **Live site:** https://pick-and-sip.onrender.com
+
 **API:** https://pick-and-sip-api.onrender.com/health
+
 **Demo video:** (link)
 
 ![A screenshot of the main screen](docs/assets/screenshot.png)
