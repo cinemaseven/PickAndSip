@@ -1,142 +1,314 @@
-# Your Project Name
+# Pick & Sip
 
-> **Replace this whole file.** It is a worked example of the README your project
-> will be graded from, not a file to leave as it is. Start with
-> [START-HERE.md](START-HERE.md).
+> **Pick your place. Sip your way.**
 
-One sentence saying what this does and who it is for.
+Pick & Sip is a personal café-tracking web application designed to help me keep track of the cafés I visit, my orders and experiences, and where I might want to go next.
 
-**Live site:** https://yourusername.github.io/your-repo-name/
-**API:** https://your-api.onrender.com/healthz
+**Live site:** https://pick-and-sip.onrender.com
+**API:** https://pick-and-sip-api.onrender.com/health
 **Demo video:** (link)
-
-> **This deployment is running in demo mode.** The interface is real; the backend
-> is simulated in your browser so the site works without a server. See
-> [Demo mode](#demo-mode) below. Delete this quote once your API is live.
 
 ![A screenshot of the main screen](docs/assets/screenshot.png)
 
 ## What it does
 
-- Report a sighting with a place, a description and a spookiness rating
-- Browse everything reported, newest first
-- Delete a report
+- View a dashboard with a summary of café activity, including the most visited café, most ordered drink, recent cafés, and café explorer level
+- Browse saved cafés through the My Cafés page
+- Search for and add new cafés with location information
+- Record café visits, including visit dates, notes, orders, prices, and ratings
+- View detailed information and visit history for each café
+- Add, edit, and delete café and visit notes
+- Filter cafés by rating, price range, and tags
+- Use **Choose for Me** to randomly select a café based on selected preferences
+- View café locations using an interactive map
+- Edit the user's profile username
+- Automatically calculate the user's Café Explorer level based on the number of distinct cafés visited
 
 ## Built with
 
-React and Vite on the front end, Express and PostgreSQL on the back end. The
-client is on GitHub Pages, the API on (host), the database on (host).
+- **React** and **Vite** for the front end
+- **Express** and **Node.js** for the back end
+- **PostgreSQL** for the database
+- **Supabase** for hosted PostgreSQL
+- **Render** for deployment
+- **Leaflet** and **OpenStreetMap/Photon** for café location and map features
+- **React Router** for page navigation
+- **Lucide React** for interface icons
 
-## Demo mode
-
-This repository can run two ways, chosen by one environment variable at **build**
-time.
-
-**Demo mode is the default.** Only the exact string `false` turns it off, so a
-forgotten or mistyped variable leaves you on the simulated backend with a visible
-notice rather than on a silently broken build.
-
-| `VITE_USE_MOCK_API` | What happens |
-| --- | --- |
-| unset, or `true` | The client answers its own requests from `localStorage`. No server, no database, nothing shared between visitors. This is what the template ships with, so the GitHub Pages link works on day one. |
-| `false` | The client calls the Express API at `VITE_API_BASE_URL`, which reads and writes real PostgreSQL. |
-
-**Demo mode is a starting point and a fallback, not a finished project.** Your
-finals submission is all three pieces deployed and talking to each other. Demo
-mode is there so you can build the interface in week one before the API exists,
-and so you have something to show if a free tier is asleep during your demo.
-
-GitHub Pages serves files and cannot run Node, so the API and the database can
-never live there. They go somewhere else:
-
-| Piece | Options |
-| --- | --- |
-| **API** | Render, Railway, Fly.io, Koyeb, a VPS, or [self-hosted behind a tunnel](../content/extending-your-app/11-self-hosting.md) |
-| **Database** | Neon, Supabase, Railway, Aiven, or your own PostgreSQL |
-
-`content/extending-your-app/` in your course workspace walks through all of it.
-Page 10 is the decision page if you do not know which to pick.
+The client is deployed on Render as a Static Site, the Express API is deployed on Render as a Web Service, and the PostgreSQL database is hosted on Supabase.
 
 ## Running it yourself
 
-**The client only, in demo mode.** No database needed.
+To run Pick & Sip locally, you need Node.js and a PostgreSQL database.
 
-    cd client
-    npm install
-    cp .env.example .env        # VITE_USE_MOCK_API stays true
-    npm run dev                 # http://localhost:5173
+### 1. Clone the repository
 
-**The whole stack.** Needs a PostgreSQL, either local or hosted.
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd PickAndSip
+```
 
-    # 1. the database
-    docker run --name my-pg -e POSTGRES_PASSWORD=devpassword \
-      -e POSTGRES_DB=haunted -p 5432:5432 -d postgres:17
+### 2. Set up the backend
 
-    # 2. the API
-    cd server
-    npm install
-    cp .env.example .env        # check DATABASE_URL
-    npm run db:reset            # creates the tables and adds sample rows
-    npm run dev                 # http://localhost:3000
+Create a file named `server/.env`:
 
-    # 3. the client, in another terminal
-    cd client
-    npm install
-    cp .env.example .env
-    # set VITE_USE_MOCK_API=false
-    npm run dev
+```env
+DATABASE_URL=your_postgresql_connection_string
+CORS_ORIGINS=http://localhost:5173
+NODE_ENV=development
+```
 
-Check the API on its own before you blame the client:
+Then open a terminal in the project folder and run:
 
-    curl http://localhost:3000/healthz     # is the process alive
-    curl http://localhost:3000/readyz      # is the database reachable
-    curl http://localhost:3000/api/sightings
+```bash
+cd server
+npm install
+npm run dev
+```
+
+The backend will run at:
+
+```text
+http://localhost:3000
+```
+
+### 3. Set up the frontend
+
+Open a **second terminal** and run:
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+Create a file named `client/.env`:
+
+```env
+VITE_USE_MOCK_API=false
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+The frontend will run at:
+
+```text
+http://localhost:5173
+```
+
+### 4. Database
+
+The database schema is provided in:
+
+```text
+server/db/schema.sql
+```
+
+The application uses PostgreSQL. The deployed version uses Supabase PostgreSQL.
+
+The `seed.sql` file contains sample data for development and testing, but it is not required for the deployed version.
 
 ## Environment variables
 
-None of these are committed. `.env.example` in each folder lists them with
-placeholder values.
+Environment files containing passwords and database credentials are not committed to the repository.
+
+### Server environment variables
 
 | Name | Where | What it is |
 | --- | --- | --- |
-| `DATABASE_URL` | server | PostgreSQL connection string. Contains a password |
-| `CORS_ORIGINS` | server | comma-separated origins allowed to call the API |
-| `NODE_ENV` | server | `production` on your host |
-| `PORT` | server | **set by the host**, do not set it yourself |
-| `VITE_USE_MOCK_API` | client, at build time | only `false` turns demo mode off; unset means on |
-| `VITE_API_BASE_URL` | client, at build time | your API's public URL, no trailing slash |
+| `DATABASE_URL` | server | PostgreSQL/Supabase connection string. Contains a password |
+| `CORS_ORIGINS` | server | Frontend URL(s) allowed to access the API |
+| `NODE_ENV` | server | `development` locally and `production` on Render |
+| `PORT` | server | Port provided by the hosting platform |
 
-Every `VITE_` value is compiled into the built JavaScript and is **public**.
-Never put a key, a password or a connection string in one.
+Example local server configuration:
+
+```env
+DATABASE_URL=your_postgresql_connection_string
+CORS_ORIGINS=http://localhost:5173
+NODE_ENV=development
+```
+
+### Client environment variables
+
+| Name | Where | What it is |
+| --- | --- | --- |
+| `VITE_USE_MOCK_API` | client, at build time | `false` to use the Express API |
+| `VITE_API_BASE_URL` | client, at build time | Public URL of the Express API |
+
+Example local client configuration:
+
+```env
+VITE_USE_MOCK_API=false
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+For the deployed frontend:
+
+```env
+VITE_USE_MOCK_API=false
+VITE_API_BASE_URL=https://pick-and-sip-api.onrender.com
+```
+
+Every `VITE_` value is compiled into the built JavaScript and is therefore public.
+
+Never put a password, database connection string, private key, or other secret in a `VITE_` variable.
+
+## Checking the API
+
+The backend provides a health endpoint:
+
+```text
+http://localhost:3000/health
+```
+
+The deployed API health endpoint is:
+
+```text
+https://pick-and-sip-api.onrender.com/health
+```
+
+A successful response should look like:
+
+```json
+{
+  "ok": true,
+  "db": "up"
+}
+```
+
+This confirms that the Express server is running and can connect to the PostgreSQL database.
 
 ## Deploying
 
-**Client, to GitHub Pages.** Already wired up in
-`.github/workflows/deploy-pages.yml`. Two one-time steps:
+Pick & Sip is deployed using Render for both the frontend and backend, with Supabase providing the PostgreSQL database.
 
-1. **Settings > Pages > Build and deployment > Source: GitHub Actions.** Without
-   this the workflow goes green and publishes nothing.
-2. Nothing else, until your API is live. Demo mode is the default, so the first
-   deploy works on its own. When the API is up, add `VITE_USE_MOCK_API` = `false`
-   and `VITE_API_BASE_URL` under **Settings > Secrets and variables > Actions >
-   Variables**, then re-run the workflow.
+### Client — Render Static Site
 
-The repository must be **public** for Pages to serve it on a free account.
+The React frontend is deployed as a Render Static Site.
 
-**API and database.** Not automated here, because most hosts deploy straight from
-your repository with no workflow at all. Point your host at the `server/` folder,
-set the environment variables in its dashboard, and run `server/db/schema.sql`
-once against the hosted database.
+**Root Directory:**
+
+```text
+client
+```
+
+**Build Command:**
+
+```bash
+npm install && npm run build
+```
+
+**Publish Directory:**
+
+```text
+dist
+```
+
+The frontend uses the following Render environment variables:
+
+```env
+VITE_USE_MOCK_API=false
+VITE_API_BASE_URL=https://pick-and-sip-api.onrender.com
+```
+
+Because Pick & Sip uses React Router, the Render Static Site uses the following rewrite:
+
+| Source | Destination | Action |
+| --- | --- | --- |
+| `/*` | `/index.html` | Rewrite |
+
+This allows routes such as `/cafes`, `/cafes/:id`, `/add`, and `/profile` to work when accessed directly or refreshed.
+
+### API — Render Web Service
+
+The Express backend is deployed as a Render Web Service.
+
+**Root Directory:**
+
+```text
+server
+```
+
+**Build Command:**
+
+```bash
+npm install
+```
+
+**Start Command:**
+
+```bash
+npm start
+```
+
+The start command runs:
+
+```bash
+node server.js
+```
+
+The backend uses the following Render environment variables:
+
+```env
+DATABASE_URL=your_supabase_connection_string
+NODE_ENV=production
+CORS_ORIGINS=https://pick-and-sip.onrender.com
+```
+
+The server uses the port provided by Render.
+
+### Database — Supabase
+
+The PostgreSQL database is hosted on Supabase.
+
+The main database tables are:
+
+```text
+profiles
+cafes
+visits
+orders
+```
+
+The database schema is located at:
+
+```text
+server/db/schema.sql
+```
+
+The Express backend communicates with Supabase PostgreSQL. The React frontend does not directly connect to the database.
 
 ## Project structure
 
-    client/          React front end, built by Vite
-      src/api/       ONE interface, two implementations, chosen by a variable
-      src/components/
-    server/          Express API
-      db/            pool, schema.sql, seed.sql, and a runner for them
-    compose.yml      only if you self-host
-    docs/            your planning documents and weekly reports
+```text
+PickAndSip/
+│
+├── client/                     React/Vite frontend
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── ...
+│   ├── package.json
+│   └── ...
+│
+├── server/                     Express API and database access logic.
+│   ├── db/                     PostgreSQL schema and other database-related files.
+│   │   ├── schema.sql
+│   │   ├── seed.sql
+│   │   └── ...
+│   ├── cafesRepo.js
+│   ├── profileRepo.js
+│   ├── server.js
+│   ├── package.json
+│   └── ...
+│
+├── docs/
+│
+├── README.md
+├── AI-USAGE.md
+└── LICENSE
+```
 
 ## Architecture
 
@@ -145,29 +317,38 @@ where each one is hosted.
 
 ## What I would do next
 
-Three honest bullets. This paragraph is worth more than it looks.
+- Improve the café search and location experience with more detailed location information.
+- Conduct additional usability testing with students and café-goers.
+- Add more features based on feedback from actual users.
 
 ## Author
 
-Your name, and a link. Course and section.
+**Francine Angela G. Alejandro**
+
+CS-402
 
 ## AI use
 
-If you used AI while building this, say so here. Honest disclosure is the
-standard in this course and increasingly outside it, and reporting heavy use
-accurately costs you nothing.
-
-This section is the last 10 points of the finals badge, and it wants three
-things:
-
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
 
-- the badge above, or one you like better
-- a line naming which assistant you used and how much of the work it touched
-- a link to [AI-USAGE.md](AI-USAGE.md), where the full account lives
+I used AI to assist with:
 
-Keep the detail in `AI-USAGE.md` rather than here. This section is the summary a
-visitor reads; that file is the record the badge is graded from.
+- Understanding how to start the frontend development
+- Setting up React Router
+- Developing and refining the frontend UI
+- Implementing map and location functionality
+- Debugging frontend and backend issues
+- Understanding API and database integration
+- Troubleshooting deployment and configuration issues
+- Improving CSS and responsive behavior
+
+AI-generated suggestions were reviewed, tested, and modified during development. The final implementation and design decisions were made by me.
+
+One example where AI initially got something wrong was the map implementation. I intended to use Leaflet and OpenStreetMap, but an AI suggestion initially used Google Maps. I corrected the implementation to use the intended Leaflet/OpenStreetMap approach.
+
+Another example was the hamburger menu behavior. The initial AI-generated implementation did not match the intended mobile design, so I reviewed and adjusted the behavior and styling to match the project's requirements.
+
+For the complete record of AI assistance, see [AI-USAGE.md](AI-USAGE.md).
 
 ## Licence
 
