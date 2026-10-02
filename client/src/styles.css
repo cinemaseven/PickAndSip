@@ -270,8 +270,9 @@ h2 {
 
 .summary-card,.stat-card,.profile-card,.level-card {
   background: var(--color-surface);
-  border: 2px solid var(--color-line);
+  border: 3px solid var(--color-line);
   border-radius: 30px;
+  box-shadow: 0 13px 14px rgba(51, 35, 26, .2);
 }
 
 .summary-card {
@@ -397,8 +398,9 @@ h2 {
 .cafe-card {
   overflow: hidden;
   background: var(--color-surface);
-  border: 1.5px solid var(--color-line);
+  border: 3px solid var(--color-line);
   border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(51, 35, 26, 0.3);
   transition: transform .15s ease,box-shadow .15s ease;
 }
 
@@ -408,7 +410,8 @@ h2 {
 
 .cafe-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(51,35,26,.08);
+  border: 4px solid var(--color-accent);
+  box-shadow: 0 8px 16px rgba(51, 35, 26, 0.3);
 }
 
 .cafe-image {
@@ -928,11 +931,12 @@ h2 {
   grid-column: 1/-1;
 }
 
-.find-cafe-panel,.form-panel {
+.find-cafe-panel, .form-panel {
   background: #F2E9DA;
   border: 2px solid var(--color-line);
   border-radius: 30px;
   padding: 25px 28px;
+  box-shadow: 0 6px 18px rgba(51, 35, 26, .2);
 }
 
 .find-cafe-panel h2,.form-panel h2 {
