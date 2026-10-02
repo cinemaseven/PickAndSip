@@ -28,6 +28,55 @@ app.get('/ready', async (request, response) => {
   }
 })
 
+function basicAuth(request, response, next) {
+  const authorization = request.headers.authorization
+
+  if (!authorization || !authorization.startsWith('Basic ')) {
+    response.setHeader(
+      'WWW-Authenticate',
+      'Basic realm="Pick & Sip"'
+    )
+
+    return response.status(401).send('Authentication required')
+  }
+
+  const encodedCredentials = authorization.slice('Basic '.length)
+  const decodedCredentials = Buffer.from(
+    encodedCredentials,
+    'base64'
+  ).toString('utf8')
+
+  const separatorIndex = decodedCredentials.indexOf(':')
+
+  if (separatorIndex === -1) {
+    response.setHeader(
+      'WWW-Authenticate',
+      'Basic realm="Pick & Sip"'
+    )
+
+    return response.status(401).send('Authentication required')
+  }
+
+  const username = decodedCredentials.slice(0, separatorIndex)
+  const password = decodedCredentials.slice(separatorIndex + 1)
+
+  if (
+    username !== process.env.APP_USERNAME ||
+    password !== process.env.APP_PASSWORD
+  ) {
+    response.setHeader(
+      'WWW-Authenticate',
+      'Basic realm="Pick & Sip"'
+    )
+
+    return response.status(401).send('Invalid credentials')
+  }
+
+  next()
+}
+
+app.use(basicAuth)
+
 function validateCafe(body) {
   const errors = []
   const name = typeof body.name === 'string' ? body.name.trim() : ''
