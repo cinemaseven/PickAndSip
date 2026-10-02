@@ -52,6 +52,15 @@ This project was built with AI assistance. This file is the record of how I used
 - **What I kept, what I changed, and why:** I kept the autocomplete approach and the ability to autofill the café name and location. I adjusted the implementation to fit my Add Café form and the way I wanted users to search for cafés. I also reviewed the search results because multiple branches of the same café could appear, which could make the results confusing for users.
 - **Commit:** https://github.com/cinemaseven/PickAndSip/commit/4d485e8ae1bb842c9a31cb72130088b3834c9790
 
+### 2026-10-02 - Asked for guide in security check and implementation
+
+- **Tool:** ChatGPT
+- **What I asked for:** I asked for guidance on securing my Pick & Sip application before deployment. I specifically needed help checking the project against the security requirements, including protecting database credentials, securing the API, validating inputs, configuring CORS, and checking repository and deployment settings.
+- **What it gave back:** ChatGPT explained the security checks I needed to perform and guided me through implementing HTTP Basic Authentication for the API, keeping credentials in environment variables, checking `.gitignore` and `.env.example`, reviewing GitHub Actions, enabling GitHub security features, enabling Supabase network restrictions and Row Level Security, and testing protected API routes.
+- **What I kept, what I changed, and why:** I kept the security approach and used HTTP Basic Authentication as the access-control layer for the API. I also followed the suggested checks and tested the API myself. I made the final configuration changes based on my actual Render, GitHub, and Supabase setup rather than blindly applying the suggestions.
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/857a089a6f098838a0d1320572bd79631e36388d
+
+
 ## 2. Where the AI got it wrong
 
 ### Case 1 - Used Google Maps instead of Leaflet
@@ -68,12 +77,12 @@ This project was built with AI assistance. This file is the record of how I used
 - **What I did instead:** I changed the mobile navigation so that the hamburger menu would overlay the page. I also adjusted its positioning, background color, and styling to match my mobile wireframe.
 - **Commit:** https://github.com/cinemaseven/PickAndSip/commit/6c383e0c59df44cb0261ba1808d6a6c99e57a550
 
-### Case 3 - short title
+### Case 3 - Incorrect display of notes
 
-- **What it gave me:** 
-- **What was wrong with it:** 
-- **What I did instead:** 
-- **Commit:** 
+- **What it gave me:** ChatGPT initially suggested a notes implementation that did not match how I wanted notes to be stored and displayed in Pick & Sip.
+- **What was wrong with it:** The notes were not being displayed in the format I wanted. I wanted notes to support multiple entries and to be displayed clearly as a list, with the date associated with each note/entry where applicable.
+- **What I did instead:** I changed the notes handling and display so that multiple notes could be shown in a list and adjusted the formatting and date display to match the design of Pick & Sip. I also fixed the way notes were presented on the café details page.
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/a771213db2cda80b9085e2a8d1dbabd30ff8c7b1 and https://github.com/cinemaseven/PickAndSip/commit/1b464e89e6a5cadba97381caf8becd81b6d6de2d
   
 ## 3. Who wrote what
 
