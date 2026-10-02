@@ -62,7 +62,7 @@ export async function getDashboard() {
   const drinks = {}
   data.cafes.forEach(c => c.visits.forEach(v => v.orders.forEach(o => { drinks[o.item] = (drinks[o.item] || 0) + 1 })))
   
-  const mostOrdered = Object.entries(drinks).sort((a,b)=>b[1]-a[1])[0] || ['Iced Seasalt Latte', 0]
+  const mostOrdered = Object.entries(drinks).sort((a,b)=>b[1]-a[1])[0] || ['No orders yet', 0]
   
   const distinctVisited = data.cafes.filter(c => c.visits.length > 0).length
   return {

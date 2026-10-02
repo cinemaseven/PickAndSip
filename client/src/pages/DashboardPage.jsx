@@ -61,7 +61,11 @@ export default function DashboardPage() {
               <Coffee size={34}/>
             </div>
 
-            <h2>{data.mostOrderedDrink.name}</h2>
+            <h2>
+              {data.mostOrderedDrink?.count > 0
+                ? data.mostOrderedDrink.name
+                : 'No orders yet'}
+            </h2>
           </div>
 
           <p className="ordered-count">Ordered {data.mostOrderedDrink.count} times</p>

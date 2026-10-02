@@ -18,12 +18,12 @@ app.get('/healthz', (request, response) => {
   response.json({ ok: true })
 })
 
-app.get('/readyz', async (request, response) => {
+app.get('/ready', async (request, response) => {
   try {
     await pool.query('SELECT 1')
     response.json({ ok: true, db: 'up' })
   } catch (error) {
-    console.error('readyz failed:', error.message)
+    console.error('ready failed:', error.message)
     response.status(503).json({ ok: false, db: 'down' })
   }
 })
