@@ -541,7 +541,7 @@ function NewCafeForm({onSubmit, form, setForm, query, setQuery, selected, setSel
         </label>
       </section>
 
-      <VisitFields form={form} setForm={setForm} updateOrder={updateOrder} removeOrder={removeOrder} addOrder={addOrder} title="Your Visit" />
+      <VisitFields form={form} setForm={setForm} updateOrder={updateOrder} removeOrder={removeOrder} addOrder={addOrder} title="Your Visit" showVisitNotes={false} />
     </form>
   );
 }
@@ -576,12 +576,12 @@ function VisitForm({onSubmit, cafes,selected, setSelected, query, setQuery, form
         {selected && <p>This visit will be saved to {selected.name}</p>}
       </section>
 
-      <VisitFields form={form} setForm={setForm} updateOrder={updateOrder} removeOrder={removeOrder} addOrder={addOrder} title="New Visit" />
+      <VisitFields form={form} setForm={setForm} updateOrder={updateOrder} removeOrder={removeOrder} addOrder={addOrder} title="New Visit" showVisitNotes={true} />
     </form>
   );
 }
 
-function VisitFields({ form, setForm, updateOrder, removeOrder, addOrder, title }) {
+function VisitFields({ form, setForm, updateOrder, removeOrder, addOrder, title, showVisitNotes }) {
   return (
     <section className="form-panel visit-fields">
       <h2>{title}</h2>
@@ -607,8 +607,10 @@ function VisitFields({ form, setForm, updateOrder, removeOrder, addOrder, title 
         </button>
       </div>
 
-      <label>Visit notes<textarea value={form.visitNotes} onChange={e => setForm(f => ({ ...f, visitNotes: e.target.value }))} maxLength={500} />
-      </label>
+      {showVisitNotes && (
+        <label>Visit notes<textarea value={form.visitNotes} onChange={e => setForm(f => ({ ...f, visitNotes: e.target.value }))} maxLength={500} />
+        </label>
+      )}
     </section>
   );
 }

@@ -59,10 +59,15 @@ export async function getDashboard() {
   
   const visitCounts = data.cafes.map(c => ({ cafe:c, count:c.visits.length })).sort((a,b)=>b.count-a.count)
   
+  const drinkPattern = /latte|coffee|tea|matcha|espresso|cappuccino|americano|mocha|frappe|frappuccino|macchiato|chai|taro|milk tea|smoothie|shake|lemonade|juice|soda|brew|affogato/i
   const drinks = {}
-  data.cafes.forEach(c => c.visits.forEach(v => v.orders.forEach(o => { drinks[o.item] = (drinks[o.item] || 0) + 1 })))
+  data.cafes.forEach(c => c.visits.forEach(v => v.orders.forEach(o => {
+    if (drinkPattern.test(o.item)) {
+      drinks[o.item] = (drinks[o.item] || 0) + 1
+    }
+  })))
   
-  const mostOrdered = Object.entries(drinks).sort((a,b)=>b[1]-a[1])[0] || ['No orders yet', 0]
+  const mostOrdered = Object.entries(drinks).sort((a,b)=>b[1]-a[1])[0] || ['No drinks yet', 0]
   
   const distinctVisited = data.cafes.filter(c => c.visits.length > 0).length
   return {
