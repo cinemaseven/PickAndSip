@@ -1585,7 +1585,7 @@ h2 {
   min-height: 29px;
   padding: 3px 14px;
   font-size: 13px;
-  margin: 50px auto 0;
+  margin: 50px 0 0 auto;
   display: flex;
 }
 
