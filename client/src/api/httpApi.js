@@ -38,6 +38,9 @@ export const addVisit = (id, input) => request(`/api/cafes/${id}/visits`, { meth
 export const updateCafeNotes = (id, noteIndex, value) => request(`/api/cafes/${id}/notes`, { method:'PATCH', body:JSON.stringify({ noteIndex, value }) })
 
 export const deleteCafeNotes = (id, noteIndex) => request(`/api/cafes/${id}/notes`, { method:'DELETE', body:JSON.stringify({ noteIndex }) })
+export const updateVisitNote = (cafeId, visitId, value) => request(`/api/cafes/${cafeId}/visits/${visitId}/notes`, { method:'PATCH', body:JSON.stringify({ value }) })
+
+export const deleteVisitNote = (cafeId, visitId) => request(`/api/cafes/${cafeId}/visits/${visitId}/notes`, { method:'DELETE' })
 
 export const getProfile = () => request('/api/profile')
 

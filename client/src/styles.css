@@ -849,10 +849,27 @@ h2 {
 .note-box {
   border: 2px solid var(--color-line);
   border-radius: 9px;
-  padding: 9px 20px;
+  padding: 12px 14px;
   margin-top: 18px;
   min-height: 53px;
   font-size: 14px;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.note-header time {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.note-text {
+  line-height: 1.45;
 }
 
 .note-box.muted {

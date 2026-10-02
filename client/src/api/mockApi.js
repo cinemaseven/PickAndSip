@@ -1,12 +1,4 @@
 // The simulated backend.
-//
-// Same function names, same return types, and the same shape of failure as
-// httpApi.js, so your components cannot tell the difference. Data lives in the
-// visitor's own browser and goes no further.
-//
-// This exists so the template's GitHub Pages link works on day one and so you
-// can build the interface before your API is deployed. It is NOT a finished
-// project. See content/extending-your-app page 3.
 
 import seed from './seed.json'
 
@@ -92,7 +84,7 @@ export async function getCafe(id) {
   if (!cafe) {
     throw new Error('Café not found')
   }
-  return clone(cafe)
+  return clone({ ...cafe, createdAt: cafe.createdAt || cafe.visits?.[0]?.date || new Date().toISOString() })
 }
 
 export async function createCafe(input) {
@@ -101,6 +93,7 @@ export async function createCafe(input) {
 
   const cafe = {
     id: nextId(data.cafes),
+    createdAt: new Date().toISOString(),
     name: input.name.trim(), 
     location: input.location.trim(),
     priceRange: input.priceRange, 
@@ -115,7 +108,7 @@ export async function createCafe(input) {
     addVisitToCafe(cafe, input.visit)
   }
   write(data)
-  return clone(cafe)
+  return clone({ ...cafe, createdAt: cafe.createdAt || cafe.visits?.[0]?.date || new Date().toISOString() })
 }
 
 function addVisitToCafe(cafe, visitInput) {
@@ -170,6 +163,35 @@ export async function deleteCafeNotes(cafeId, noteIndex) {
     throw new Error('Café not found')
   }
   cafe.notes.splice(noteIndex, 1)
+  write(data)
+  return null
+}
+
+
+export async function updateVisitNote(cafeId, visitId, value) {
+  await delay()
+  const data = read()
+  const cafe = data.cafes.find(c => String(c.id) === String(cafeId))
+  if (!cafe) throw new Error('Café not found')
+
+  const visit = cafe.visits.find(v => String(v.id) === String(visitId))
+  if (!visit) throw new Error('Visit not found')
+
+  visit.notes = value.trim()
+  write(data)
+  return clone(visit)
+}
+
+export async function deleteVisitNote(cafeId, visitId) {
+  await delay()
+  const data = read()
+  const cafe = data.cafes.find(c => String(c.id) === String(cafeId))
+  if (!cafe) throw new Error('Café not found')
+
+  const visit = cafe.visits.find(v => String(v.id) === String(visitId))
+  if (!visit) throw new Error('Visit not found')
+
+  visit.notes = ''
   write(data)
   return null
 }

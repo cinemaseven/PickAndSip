@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Coffee, ExternalLink, MapPin, PlusCircle, Pencil, Trash2, Star } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router';
-import { getCafe, updateCafeNotes, deleteCafeNotes } from '../api';
+import { getCafe, updateCafeNotes, deleteCafeNotes, updateVisitNote, deleteVisitNote } from '../api';
 import Buttons from '../components/atoms/Buttons';
 import StarRating from '../components/atoms/StarRating';
 import StatCard from '../components/molecules/StatCard';
@@ -11,37 +11,66 @@ export default function CafeDetailsPage() {
   const navigate = useNavigate();
   const [cafe, setCafe] = useState(null);
   const [error, setError] = useState('');
-  const [editing, setEditing] = useState(false);
+  const [editingNote, setEditingNote] = useState(null);
   const [noteValue, setNoteValue] = useState('');
 
   useEffect(() => {
     getCafe(id).then(c => {
       setCafe(c);
-      setNoteValue(c.notes?.[0] || '');
+      setEditingNote(null);
+      setNoteValue('');
     }).catch(e => setError(e.message));
   }, [id]);
 
+  function startEditing(note) {
+    setEditingNote(note);
+    setNoteValue(note.text);
+  }
+
+  function cancelEditing() {
+    setEditingNote(null);
+    setNoteValue('');
+  }
+
   async function saveNote() {
+    if (!editingNote) return;
+
     try {
-      await updateCafeNotes(id, 0, noteValue);
-      setCafe(c => ({ ...c, notes: [noteValue] }));
-      setEditing(false);
-    }
-    catch (e) {
+      if (editingNote.type === 'cafe') {
+        const notes = await updateCafeNotes(id, editingNote.index, noteValue);
+        setCafe(c => ({ ...c, notes }));
+      } else {
+        const visit = await updateVisitNote(id, editingNote.id, noteValue);
+        setCafe(c => ({
+          ...c,
+          visits: c.visits.map(v => v.id === editingNote.id ? { ...v, notes: visit.notes } : v)
+        }));
+      }
+      cancelEditing();
+    } catch (e) {
       setError(e.message);
     }
   }
 
-  async function removeNote() {
-    if (!window.confirm('Delete this note?'))
-      return;
+  async function removeNote(note) {
+    if (!window.confirm('Delete this note?')) return;
 
     try {
-      await deleteCafeNotes(id, 0);
-      setCafe(c => ({ ...c, notes: [] }));
-      setNoteValue('');
-    }
-    catch (e) {
+      if (note.type === 'cafe') {
+        await deleteCafeNotes(id, note.index);
+        setCafe(c => ({ ...c, notes: c.notes.filter((_, i) => i !== note.index) }));
+      } else {
+        await deleteVisitNote(id, note.id);
+        setCafe(c => ({
+          ...c,
+          visits: c.visits.map(v => v.id === note.id ? { ...v, notes: '' } : v)
+        }));
+      }
+
+      if (editingNote?.type === note.type && editingNote?.id === note.id && editingNote?.index === note.index) {
+        cancelEditing();
+      }
+    } catch (e) {
       setError(e.message);
     }
   }
@@ -161,60 +190,80 @@ export default function CafeDetailsPage() {
         <div className="notes-panel">
           <div className="section-mini-title">
             <h2>Notes</h2>
-
-            <div className="note-actions">
-              <button onClick={() => setEditing(true)}>
-                <Pencil size={13} />Edit
-              </button>
-
-              <button onClick={removeNote}>
-                <Trash2 size={13} />Delete
-              </button>
-            </div>
+            <span>Newest first</span>
           </div>
 
-          {editing ? (
-            <>
-              <textarea
-                value={noteValue}
-                onChange={e => setNoteValue(e.target.value)}
-                maxLength={500}
-              />
-
-              <div className="note-edit-actions">
-                <Buttons
-                  variant="outline"
-                  onClick={() => {
-                    setEditing(false);
-                    setNoteValue(cafe.notes?.[0] || '');
-                  }}
-                >
-                  Cancel
-                </Buttons>
-
-                <Buttons onClick={saveNote}>Save</Buttons>
-              </div>
-            </>
-          ) : (
-            <>
-              {cafe.notes.map((n, i) => (
-                <div className="note-box" key={`cafe-note-${i}`}>{n}</div>
-              ))}
-
-              {cafe.visits
+          {(() => {
+            const notes = [
+              ...cafe.notes.map((text, index) => ({
+                type: 'cafe',
+                index,
+                text,
+                date: cafe.visits.length
+                      ? [...cafe.visits].sort((a, b) => new Date(a.date) - new Date(b.date))[0].date
+                      : null
+              })),
+              ...cafe.visits
                 .filter(v => v.notes?.trim())
-                .map(v => (
-                  <div className="note-box" key={`visit-note-${v.id}`}>
-                    <strong>Visit — {new Date(v.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong>
-                    <div>{v.notes}</div>
-                  </div>
-                ))}
+                .map(v => ({
+                  type: 'visit',
+                  id: v.id,
+                  text: v.notes,
+                  date: v.date
+                }))
+            ].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-              {!cafe.notes.length && !cafe.visits.some(v => v.notes?.trim()) && (
-                <div className="note-box muted">No notes yet.</div>
-              )}
-            </>
-          )}
+            if (!notes.length) {
+              return <div className="note-box muted">No notes yet.</div>;
+            }
+
+            return notes.map(note => {
+              const isEditing = editingNote && editingNote.type === note.type &&
+                (note.type === 'cafe' ? editingNote.index === note.index : editingNote.id === note.id);
+
+              return (
+                <div className="note-box" key={`${note.type}-${note.type === 'cafe' ? note.index : note.id}`}>
+                  {isEditing ? (
+                    <>
+                      <textarea
+                        value={noteValue}
+                        onChange={e => setNoteValue(e.target.value)}
+                        maxLength={500}
+                      />
+
+                      <div className="note-edit-actions">
+                        <Buttons variant="outline" onClick={cancelEditing}>Cancel</Buttons>
+                        <Buttons onClick={saveNote}>Save</Buttons>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="note-header">
+                        <time>
+                          {new Date(note.date + (note.date?.length === 10 ? 'T00:00:00' : '')).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })}
+                        </time>
+
+                        <div className="note-actions">
+                          <button onClick={() => startEditing(note)}>
+                            <Pencil size={13} />Edit
+                          </button>
+                          <button onClick={() => removeNote(note)}>
+                            <Trash2 size={13} />Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="note-text">{note.text}</div>
+                    </>
+                  )}
+                </div>
+              );
+            });
+          })()}
         </div>
       </section>
     </div>

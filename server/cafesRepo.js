@@ -31,7 +31,8 @@ export async function getCafe(pool, id) {
         price_range AS "priceRange",
         rating,
         tags,
-        notes
+        notes,
+        created_at AS "createdAt"
         FROM cafes
         WHERE id = $1
     `, [id])
@@ -267,6 +268,34 @@ export async function deleteCafeNote(pool, cafeId, noteIndex) {
         SET notes = $1, updated_at = now()
         WHERE id = $2
     `, [notes, cafeId])
+}
+
+export async function updateVisitNote(pool, cafeId, visitId, value) {
+    const result = await pool.query(`
+        UPDATE visits
+        SET notes = $1
+        WHERE id = $2 AND cafe_id = $3
+        RETURNING id, TO_CHAR(visit_date, 'YYYY-MM-DD') AS date, notes
+    `, [value.trim(), visitId, cafeId])
+
+    if (!result.rows[0]) {
+        throw new Error('Visit not found')
+    }
+
+    return result.rows[0]
+}
+
+export async function deleteVisitNote(pool, cafeId, visitId) {
+    const result = await pool.query(`
+        UPDATE visits
+        SET notes = ''
+        WHERE id = $1 AND cafe_id = $2
+        RETURNING id
+    `, [visitId, cafeId])
+
+    if (!result.rows[0]) {
+        throw new Error('Visit not found')
+    }
 }
 
 export async function pickCafe(pool, filters) {

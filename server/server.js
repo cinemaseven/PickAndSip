@@ -372,6 +372,47 @@ app.delete('/api/cafes/:id/notes', async (request, response, next) => {
   }
 })
 
+app.patch('/api/cafes/:id/visits/:visitId/notes', async (request, response, next) => {
+  const value = typeof request.body?.value === 'string'
+    ? request.body.value
+    : ''
+
+  if (value.trim().length > 500) {
+    return response.status(400).json({ error: 'note must be 500 characters or fewer' })
+  }
+
+  try {
+    const visit = await cafes.updateVisitNote(
+      pool,
+      request.params.id,
+      Number(request.params.visitId),
+      value
+    )
+    response.json(visit)
+  } catch (error) {
+    if (error.message === 'Visit not found') {
+      return response.status(404).json({ error: error.message })
+    }
+    next(error)
+  }
+})
+
+app.delete('/api/cafes/:id/visits/:visitId/notes', async (request, response, next) => {
+  try {
+    await cafes.deleteVisitNote(
+      pool,
+      request.params.id,
+      Number(request.params.visitId)
+    )
+    response.status(204).end()
+  } catch (error) {
+    if (error.message === 'Visit not found') {
+      return response.status(404).json({ error: error.message })
+    }
+    next(error)
+  }
+})
+
 app.get('/api/profile', async (request, response, next) => {
   try {
     response.json(await profile.getProfile(pool))
