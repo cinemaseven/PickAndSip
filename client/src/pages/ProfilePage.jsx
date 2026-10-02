@@ -104,6 +104,16 @@ export default function ProfilePage() {
           <LevelLadder current={profile.level.number}/>
         </section>
       </div>
+
+      <Buttons
+        className="logout-btn"
+        variant="primary"
+        onClick={() => {
+          sessionStorage.removeItem("pick-and-sip-auth");
+          window.dispatchEvent(new Event("pick-and-sip-auth-expired"));
+        }}>
+        Log out
+      </Buttons>
     </div>
   );
 }

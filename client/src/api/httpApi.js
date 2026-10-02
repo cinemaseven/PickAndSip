@@ -6,9 +6,22 @@
 const BASE = import.meta.env.VITE_API_BASE_URL || ''
 
 async function request(path, options = {}) {
+  const auth = sessionStorage.getItem("pick-and-sip-auth")
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(auth ? { Authorization: `Basic ${auth}` } : {}),
+    ...(options.headers || {}),
+  }
+
   const response = await fetch(`${BASE}${path}`, {
-    ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    ...options,
+    headers,
   })
+
+  if (response.status === 401) {
+    sessionStorage.removeItem("pick-and-sip-auth")
+    window.dispatchEvent(new Event("pick-and-sip-auth-expired"))
+  }
 
   if (!response.ok) {
     // Try to use the API's own message; fall back to the status line.
@@ -47,3 +60,19 @@ export const getProfile = () => request('/api/profile')
 export const updateProfile = input => request('/api/profile', { method:'PATCH', body:JSON.stringify(input) })
 
 export const pickCafe = filters => request(`/api/cafes/pick?${new URLSearchParams({ minRating: filters.minRating ?? '', priceRanges: filters.priceRanges?.join(',') ?? '', tags: filters.tags?.join(',') ?? '' })}`)
+
+export async function authenticate(username, password) {
+  const credentials = btoa(`${username}:${password}`)
+
+  const response = await fetch(`${BASE}/api/profile`, {
+    headers: {
+      Authorization: `Basic ${credentials}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText}`)
+  }
+
+  return credentials
+}
