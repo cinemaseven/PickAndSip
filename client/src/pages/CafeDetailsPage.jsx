@@ -195,12 +195,25 @@ export default function CafeDetailsPage() {
                 <Buttons onClick={saveNote}>Save</Buttons>
               </div>
             </>
-          ) : cafe.notes.length ? (
-            cafe.notes.map((n, i) => (
-              <div className="note-box" key={i}>{n}</div>
-            ))
           ) : (
-            <div className="note-box muted">No notes yet.</div>
+            <>
+              {cafe.notes.map((n, i) => (
+                <div className="note-box" key={`cafe-note-${i}`}>{n}</div>
+              ))}
+
+              {cafe.visits
+                .filter(v => v.notes?.trim())
+                .map(v => (
+                  <div className="note-box" key={`visit-note-${v.id}`}>
+                    <strong>Visit — {new Date(v.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</strong>
+                    <div>{v.notes}</div>
+                  </div>
+                ))}
+
+              {!cafe.notes.length && !cafe.visits.some(v => v.notes?.trim()) && (
+                <div className="note-box muted">No notes yet.</div>
+              )}
+            </>
           )}
         </div>
       </section>
