@@ -1,5 +1,3 @@
-// The simulated backend.
-
 import seed from './seed.json'
 
 const KEY = 'pick-and-sip:mock-data'
