@@ -86,17 +86,41 @@ This project was built with AI assistance. This file is the record of how I used
   
 ## 3. Who wrote what
 
-At least a fifth of this project is code you wrote yourself. Name it, and explain
-it in your own words.
-
-> Group projects: give each member their own heading below, and use your GitHub
-> handle as the heading. You are graded on your own section.
-
 ### Written by me
 
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
+#### 1. API setup, mock API, and seed data
+
+- **File:** `httpApi.jsx`, `index.js`, `mockApi.jsx`, and `seed.json`
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/2dd6a0fe1838546fb2297ff3739b04e47ec8b564
+- **What it does and why it is built this way:** These files handle the initial API and data setup of Pick & Sip. `index.js` sets up the backend entry point, while `httpApi.jsx` handles requests from the frontend. `mockApi.jsx` was used to provide temporary data while developing and testing the frontend before everything was connected to the actual database. `seed.json` contains the initial sample data used by the mock API. I worked on these files myself and used AI mainly when I encountered problems or needed help understanding an implementation. I decided to keep the mock data while developing the frontend because it allowed me to test the UI and page behavior before the database integration was complete.
+
+#### 2. Application routing
+
+- **File:** `App.jsx`
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/fff540320c86b98250fc0e5d2fc0c33d6e7e3b5f
+- **What it does and why it is built this way:** `App.jsx` acts as the main router of the application. It defines the routes for the different pages of Pick & Sip and connects each URL to its corresponding page component. I built the routing around the navigation structure of my application so users can move between the Dashboard, My Cafés, Add Café, Profile, and other pages without putting all of the page logic into one component.
+
+#### 3. Application styling
+
+- **File:** `styles.css`
+- **Commit:**  
+  https://github.com/cinemaseven/PickAndSip/commit/fe386033f4aec5e555eee9c35d6326c2d24abedb  
+  https://github.com/cinemaseven/PickAndSip/commit/6c383e0c59df44cb0261ba1808d6a6c99e57a550  
+  https://github.com/cinemaseven/PickAndSip/commit/0afe3beb4499618b3f2d7f41234ff6dc09a88dd4  
+  https://github.com/cinemaseven/PickAndSip/commit/6e4aea1c9a778f3657cacbe967a34640c4c9c3f2
+- **What it does and why it is built this way:** `styles.css` contains the styling for the web application, including the layout, spacing, typography, buttons, cards, navigation, forms, and responsive behavior. I had some help from AI when working on particular styling problems, but I made revisions to the CSS as I developed the application. I repeatedly tested the pages and adjusted the styles to make the actual interface match my high-fidelity wireframes, including changes for the mobile viewport.
+
+#### 4. Café data repository
+
+- **File:** `cafesRepo.js`
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/8c0d60d2e75704edfa532e654aeb03469e6ef67a
+- **What it does and why it is built this way:** `cafesRepo.js` contains the database queries used to work with café data. The repository separates the SQL queries from the rest of the backend logic, which makes the code easier to organize and allows the routes or services to call the repository when they need café information. Most of the SQL queries in this file were written by me. I used AI for help when I encountered problems with a query or needed to troubleshoot an issue, but I worked out and implemented most of the queries myself.
+
+#### 5. Profile data repository
+
+- **File:** `profileRepo.js`
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/0403bf885bbbb89fb4ee638b4ff9b20abf55b66c
+- **What it does and why it is built this way:** `profileRepo.js` contains the SQL queries for retrieving and working with profile data. I separated these queries into a repository so that the database operations for profiles are kept separate from the rest of the application logic. Most of the queries were written by me. I used AI when I was troubleshooting or needed help understanding an issue, but I made the main decisions about the queries and how they should work with my database structure.
 
 ### The AI-written part I understand best
 
