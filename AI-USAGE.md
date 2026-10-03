@@ -90,9 +90,9 @@ This project was built with AI assistance. This file is the record of how I used
 
 #### 1. API setup, mock API, and seed data
 
-- **File:** `httpApi.jsx`, `index.js`, `mockApi.jsx`, and `seed.json`
+- **File:** `httpApi.jsx`, `index.js`, and `seed.json`
 - **Commit:** https://github.com/cinemaseven/PickAndSip/commit/2dd6a0fe1838546fb2297ff3739b04e47ec8b564
-- **What it does and why it is built this way:** These files handle the initial API and data setup of Pick & Sip. `index.js` sets up the backend entry point, while `httpApi.jsx` handles requests from the frontend. `mockApi.jsx` was used to provide temporary data while developing and testing the frontend before everything was connected to the actual database. `seed.json` contains the initial sample data used by the mock API. I worked on these files myself and used AI mainly when I encountered problems or needed help understanding an implementation. I decided to keep the mock data while developing the frontend because it allowed me to test the UI and page behavior before the database integration was complete.
+- **What it does and why it is built this way:** These files handle the initial API and data setup of Pick & Sip. `index.js` sets up the backend entry point, while `httpApi.jsx` handles requests from the frontend. `seed.json` contains the initial sample data used by the mock API. I worked on these files myself and used AI mainly when I encountered problems or needed help understanding an implementation. I decided to keep the mock data while developing the frontend because it allowed me to test the UI and page behavior before the database integration was complete.
 
 #### 2. Application routing
 
@@ -124,6 +124,6 @@ This project was built with AI assistance. This file is the record of how I used
 
 ### The AI-written part I understand best
 
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+- **File:** `mockApi.js`
+- **Commit:** https://github.com/cinemaseven/PickAndSip/commit/2dd6a0fe1838546fb2297ff3739b04e47ec8b564
+- **What it does and why we kept it:** `mockApi.js` provides temporary API-like functions that let the frontend read and modify the seed data while the actual backend and database were still being developed. It handles operations such as reading the mock data, writing updated data, generating the next available ID, and preparing dashboard-related information. I kept it during the frontend development stage because it allowed me to test the pages and their functionality without depending on the completed database. Working with this file also helped me understand how the frontend gets and uses data, which made it easier for me to understand and work on the other parts of the application when I eventually moved toward the actual backend and database. I understand how the functions use the seed data as the temporary source of truth and how the frontend calls these functions to retrieve the information it needs.
