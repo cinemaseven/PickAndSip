@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { authenticate } from "../api/httpApi"
-import logoDark from "../assets/logo-dark.svg"
+import logoDark from "../assets/logo-dark.png"
 
 export default function LoginPage({ onLogin }) {
     const [username, setUsername] = useState("")

@@ -1,4 +1,4 @@
-import logoLight from '../../assets/logo-light.svg';
+import logoLight from '../../assets/logo-light.png';
 
 export default function Footer() {
   return (
