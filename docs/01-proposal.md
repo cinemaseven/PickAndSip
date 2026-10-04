@@ -114,7 +114,6 @@ The application keeps the café → visit → order relationship:
 - **Visits** – individual visits associated with a café.
 - **Orders** – individual food/drink orders associated with a visit, including item, price, and rating.
 - **Profile** – username and Café Explorer level.
-- **Draft orders** – temporary order entries used while creating a café or visit before they are saved.
 
 Notes are optional and can contain multiple entries.
 
