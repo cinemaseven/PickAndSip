@@ -1,12 +1,5 @@
 # Proposal
 
-The submitted version is your Canvas answer for m8a1. This copy lives in the
-repository so the plan and the code sit next to each other.
-
-Paste or rewrite the proposal here, and **keep it updated** as things change. A
-proposal that still describes a feature you cut in October is worse than no
-proposal.
-
 **App Name:** Pick & Sip: *Pick your place. Sip your way.*
 
 ## What the app is for
