@@ -2185,7 +2185,7 @@ h2 {
   }
 
   .date-input {
-    width: calc(100% - 7px);
+    width: calc(100% - 14px);
     min-width: 0;
   }
 
