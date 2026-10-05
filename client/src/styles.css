@@ -2121,6 +2121,15 @@ h2 {
     border-radius: 22px;
   }
 
+  .cafe-search-wrapper {
+    z-index: 1000;
+  }
+
+  .map-placeholder {
+    position: relative;
+    z-index: 1;
+  }
+
   .find-cafe-panel h2,
   .form-panel h2 {
     font-size: 24px;
@@ -2173,6 +2182,17 @@ h2 {
     padding: 8px 10px;
     margin-top: 4px;
     font-size: 13px;
+  }
+
+  .date-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .date-input input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .form-panel textarea {
