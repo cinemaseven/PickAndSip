@@ -1,24 +1,86 @@
 # Mockup
 
-Your prelim wireframes are finished and are not being redone. The mockup is what
-the app will actually look like: the wireframes painted in, with your real
-colours, type, spacing and content.
+The final mockup represents the final visual design of Pick & Sip, including the actual colours, typography, spacing, content, café cards, buttons, forms, maps, and responsive layouts.
 
-**This is submitted as images or a PDF.** A written description of a picture
-scores in the lowest band, because the thing being asked for is the picture.
+The mockup covers all screens included in the revised proposal:
 
-Put the exported images in `assets/` and link them here, so the repository
-carries them too.
+- Dashboard / Home
+- My Cafés
+- Add Café
+- Profile
+- Café Details
 
-## What it should show
+It also includes the mobile layout and an empty state for when there are no saved cafés or no café data to display.
 
-- Every screen in your revised proposal, and no screens that are not in it
-- Real content, not "Lorem ipsum" and not "Title here"
-- The empty state of at least one screen, because that is the one people forget
-- What it looks like on a phone
+## Screens
+
+### Login
+
+Shows the application login screen used to access the Pick & Sip application.
+
+![Login](docs\assets\HF-desktop-login.png)
+
+### Dashboard / Home
+
+The home page shows an overview of café activity, including the cafe explorer level, most visited café, most ordered drink, recent cafés, and quick actions.
+
+![Dashboard / Home](docs\assets\HF-desktop-homepage.png)
+
+### My Cafes
+
+The My Cafes page shows the saved café list, including the search bar, filters, café cards, and the "Choose for Me" feature. The "Choose for Me" popup is included within this screen rather than being a separate route.
+
+![My Cafes](docs\assets\HF-desktop-myCafes.png)
+
+**Choose for me popup**
+
+The popup allows the user to set preferences such as minimum rating and price range before selecting a café from the saved café list.
+
+![Choose for me popup](docs\assets\HF-desktop-chooseForMe.png)
+
+### Cafe Details
+
+The Cafe Details page shows the selected café's information, including its location, price range, rating, tags, notes, and visit and order history. It also provides the option to add a visit and manage notes.
+
+![Cafe Details](docs\assets\HF-desktop-cafeDetails.png)
+
+### Add Cafe
+
+The Add Café screen provides the forms needed to add a new café or record a visit to an existing café.
+
+**Add New Cafe**
+
+Shows the form for adding a new café, including café information, location, price range, rating, tags, notes, and the first visit and orders.
+
+![Add New Cafe](docs\assets\HF-desktop-addNewCafe.png)
+
+**Add a Visit**
+
+Shows the form for selecting an existing café and recording a new visit with its date, notes, and orders.
+
+![Add a Visit](docs\assets\HF-desktop-addVisit.png)
+
+### Profile
+
+The Profile shows the user's username, Café Explorer level, and progress toward the next level.
+
+![Profile](docs\assets\HF-desktop-profile.png)
+
+### Empty State
+
+This shows how the application appears when there are no saved cafés or when no cafés match the current search or filters.
+
+![Empty State](docs\assets\HF-desktop-emptyState.png)
+
+### Mobile Layout
+
+![Mobile Layout](docs\assets\HF-mobile-homepage.png)
 
 ## Honest note
 
-Anything in the mockup that is not in the built app by the end needs a sentence
-in your journal explaining what happened. That is a normal part of building
-something, and saying so reads far better than quietly shipping less.
+The deployed application has a few minor visual differences from the mockup:
+
+- The **Choose for Me** text is centered in the desktop mockup but is left-aligned in the deployed desktop application.
+- In the mobile mockup, **Choose for Me** appears above the recent cafés without its own card, while in the deployed mobile application it remains inside its card and is placed below the **Most ordered drink** section.
+
+These are minor visual differences and do not affect the functionality or overall layout of the application.
