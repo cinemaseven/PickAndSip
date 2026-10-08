@@ -1,6 +1,6 @@
 # Mockup
 
-The final mockup represents the final visual design of Pick & Sip, including the actual colours, typography, spacing, content, café cards, buttons, forms, maps, and responsive layouts.
+The final mockup represents the final visual design of Pick & Sip, including the actual colors, typography, spacing, content, café cards, buttons, forms, maps, and responsive layouts.
 
 The mockup covers all screens included in the revised proposal:
 
