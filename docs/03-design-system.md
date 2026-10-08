@@ -172,7 +172,6 @@ The design system uses the following responsive plan:
 #### Mobile
 
 Below **768px**:
-(show code like the @media)
 
 - Navigation collapses into a hamburger menu.
 - Cards and forms stack into one column.
@@ -205,7 +204,6 @@ The design system includes the following accessibility checks:
 
 ## In code
 
-Pick & Sip uses **plain CSS / CSS Modules with CSS custom properties** for its
-reusable design tokens.
+Pick & Sip uses **plain CSS / CSS Modules with CSS custom properties** for its reusable design tokens.
 
 The CSS files in the project contain the styling and reusable design values.
