@@ -8,9 +8,10 @@ Pick & Sip is a personal café-tracking web application designed to help me keep
 
 **API:** https://pick-and-sip-api.onrender.com/health
 
-**Demo video:** (link)
+**Demo video:** ![Pick and Sip Demo Video](https://drive.google.com/file/d/1E5_DvUjKVKH18osxzcdraVV8EU23N20G/view?usp=sharing)
 
-![A screenshot of the main screen](docs/assets/screenshot.png)
+**Main Screen**
+![A screenshot of the main screen](docs/assets/main_screen.png)
 
 ## What it does
 
