@@ -7,19 +7,19 @@ The demo video presents Pick & Sip, demonstrates its main features on the deploy
 
 ## Demo Video Structure
 
-### Introduction and the Problem
+### 1. Introduction and the Problem
 
 Introduces Pick & Sip, its intended user, and the problem it aims to solve.
 
-### Application Demo
+### 2. Application Demo
 
 Demonstrates the deployed application end to end, including all pages, adding a café and a visit, using Choose for Me, and viewing the mobile layout.
 
-### Technology Used and Brief Code Walkthrough
+### 3. Technology Used and Brief Code Walkthrough
 
 Explains the technologymstack and walks through a relevant part of the code.
 
-### What's Next
+### 4. What's Next
 
 Discusses the application's limitations, possible improvements, and future enhancements.
 
