@@ -1,20 +1,14 @@
 # Project documents
 
-Everything your project is marked on that is not code. Keep it here, in the
-repository, so it is versioned alongside the thing it describes.
+All project documentation for Pick & Sip is kept here in the repository so that the documents stay versioned alongside the application they describe.
 
 | File | What it is | When |
 | --- | --- | --- |
-| [01-proposal.md](01-proposal.md) | the revised proposal | finals, m8a1 |
-| [02-mockup.md](02-mockup.md) | what the app will look like | finals, m8a2 |
-| [03-design-system.md](03-design-system.md) | colours, type, components | finals, m8a3 |
-| [04-weekly-reports.md](04-weekly-reports.md) | a few lines a week | every week |
-| [05-demo-video.md](05-demo-video.md) | the recording, and its plan | the end |
-| [06-security-and-privacy.md](06-security-and-privacy.md) | what you checked before making this public | before your first push |
+| [01-proposal.md](01-proposal.md) | The revised proposal, including the app's purpose, scope, milestones, and open questions | Finals, M8A1 |
+| [02-mockup.md](02-mockup.md) | The final visual mockup showing the application's screens and responsive layout | Finals, M8A2 |
+| [03-design-system.md](03-design-system.md) | The colour palette, typography, spacing, reusable components, responsive rules, and accessibility guidelines | Finals, M8A3 |
+| [04-weekly-reports.md](04-weekly-reports.md) | Weekly progress, completed work, challenges, hours spent, and next steps | Every week |
+| [05-demo-video.md](05-demo-video.md) | The demo video link, recording structure, checklist, and fallback recording | At the end |
+| [06-security-and-privacy.md](06-security-and-privacy.md) | Security and privacy checks performed before making the repository public and submitting the project | Before the first push and before submission |
 
-Put images in `assets/`. A screenshot named `assets/screenshot.png` is referenced
-by the main README, and a README with an image reads as finished in a way one
-without an image does not.
-
-**Write these as you go.** A weekly report written on the last day is obvious to
-read and worth very little.
+The `assets/` folder contains the images and documents used in the project documentation, including the high-fidelity wireframes and the Design System PDF.
